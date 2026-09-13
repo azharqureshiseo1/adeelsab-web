@@ -1,0 +1,222 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Design tokens — sampled from the supplied AdeelSab logo files.
+   Orange is an ACCENT, never a large flat background. See BRIEF section 2.3.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Brand orange — the "Sab" wordmark and the bag mark */
+  --color-brand-50: #fff3ec;
+  --color-brand-100: #ffe2d2;
+  --color-brand-300: #ff8b3d;
+  --color-brand-400: #ff7a2b;
+  --color-brand-500: #fb5301;
+  --color-brand-600: #e63e00;
+
+  /* Ink — the "Adeel" wordmark. Near-black with a slight navy cast */
+  --color-ink-050: #f8fafc;
+  --color-ink-100: #f1f4f7;
+  --color-ink-200: #e2e6eb;
+  --color-ink-400: #7c8797;
+  --color-ink-500: #566374;
+  --color-ink-700: #2b3542;
+  --color-ink-800: #1a2430;
+  --color-ink-900: #101820;
+
+  /* Semantic */
+  --color-success: #128c4a;
+  --color-warning: #c77700;
+  --color-danger: #c42b1c;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-urdu: var(--font-nastaliq), serif;
+
+  /* Radii */
+  --radius-input: 10px;
+  --radius-card: 16px;
+
+  /* Shadows — soft and low, never heavy */
+  --shadow-soft: 0 1px 3px rgba(16, 24, 32, 0.06), 0 8px 24px rgba(16, 24, 32, 0.06);
+  --shadow-lift: 0 2px 6px rgba(16, 24, 32, 0.08), 0 16px 40px rgba(16, 24, 32, 0.1);
+}
+
+:root {
+  --brand-gradient: linear-gradient(135deg, #ff8b3d 0%, #fb5301 55%, #e63e00 100%);
+  --header-height: 72px;
+}
+
+/* --------------------------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #ffffff;
+  color: var(--color-ink-500);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 17px;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-ink-900);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Type scale — mobile first, desktop at md. H1 56/40, H2 40/30, H3 28/22, H4 20/18 */
+.t-h1 { font-size: 2.5rem; }
+.t-h2 { font-size: 1.875rem; }
+.t-h3 { font-size: 1.375rem; }
+.t-h4 { font-size: 1.125rem; }
+@media (min-width: 768px) {
+  .t-h1 { font-size: 3.5rem; }
+  .t-h2 { font-size: 2.5rem; }
+  .t-h3 { font-size: 1.75rem; }
+  .t-h4 { font-size: 1.25rem; }
+}
+
+/* Numerals in stats and tables align in columns */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Urdu / RTL -----------------------------------------------------------
+   Nastaliq needs far more leading than Latin and must never fall back to a
+   plain sans face. The `.font-urdu` class is applied to <html> by the language
+   provider, alongside dir="rtl".
+--------------------------------------------------------------------------- */
+.font-urdu,
+.font-urdu body {
+  font-family: var(--font-urdu);
+  line-height: 2;
+}
+
+.font-urdu h1,
+.font-urdu h2,
+.font-urdu h3,
+.font-urdu h4 {
+  font-family: var(--font-urdu);
+  font-weight: 600;
+  line-height: 1.9;
+  letter-spacing: normal;
+}
+
+/* Latin fragments inside Urdu copy (brand name, TCS, Rs.) keep the Latin face */
+.font-urdu .latin {
+  font-family: var(--font-sans);
+  line-height: 1.7;
+}
+
+[dir='rtl'] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+/* --- Gradient utilities ---------------------------------------------------
+   Reserved for the logo mark, primary button hover, one hero shape and stat
+   numbers. Maximum three instances per page.
+--------------------------------------------------------------------------- */
+.bg-brand-gradient {
+  background-image: var(--brand-gradient);
+}
+
+.text-brand-gradient {
+  background-image: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- Scroll reveal --------------------------------------------------------
+   Driven by IntersectionObserver in components/blocks/Reveal.tsx. CSS only,
+   and fully disabled under prefers-reduced-motion.
+--------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --- Focus ---------------------------------------------------------------- */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --- Prose (MDX docs and blog) -------------------------------------------- */
+.prose-as {
+  color: var(--color-ink-500);
+  max-width: 72ch;
+}
+.prose-as > * + * { margin-top: 1.25em; }
+.prose-as h2 { font-size: 1.625rem; margin-top: 2.25em; margin-bottom: 0.5em; scroll-margin-top: 96px; }
+.prose-as h3 { font-size: 1.25rem; margin-top: 1.75em; margin-bottom: 0.4em; scroll-margin-top: 96px; }
+.prose-as ul { list-style: disc; padding-inline-start: 1.35em; }
+.prose-as ol { list-style: decimal; padding-inline-start: 1.35em; }
+.prose-as li + li { margin-top: 0.4em; }
+.prose-as a { color: var(--color-brand-600); text-decoration: underline; text-underline-offset: 3px; }
+.prose-as a:hover { color: var(--color-brand-500); }
+.prose-as strong { color: var(--color-ink-900); font-weight: 700; }
+.prose-as blockquote {
+  border-inline-start: 3px solid var(--color-brand-500);
+  padding-inline-start: 1rem;
+  color: var(--color-ink-700);
+  font-style: normal;
+}
+.prose-as code {
+  background: var(--color-ink-100);
+  padding: 0.15em 0.4em;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+.prose-as table { width: 100%; border-collapse: collapse; font-size: 0.95em; }
+.prose-as th, .prose-as td { border: 1px solid var(--color-ink-200); padding: 0.6rem 0.75rem; text-align: start; }
+.prose-as th { background: var(--color-ink-050); color: var(--color-ink-900); font-weight: 600; }

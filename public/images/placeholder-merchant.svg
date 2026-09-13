@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Merchant at the counter">
+  <title>Merchant at the counter</title>
+  <rect width="800" height="600" fill="#F1F4F7"/>
+  <rect x="1" y="1" width="798" height="598" fill="none" stroke="#E2E6EB" stroke-width="2" rx="16"/>
+  <circle cx="400" cy="282" r="30" fill="#FFE2D2"/>
+  <path d="M386 282 l10 10 18 -20" fill="none" stroke="#FB5301" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="400" y="342" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="16" fill="#7C8797">Merchant at the counter</text>
+  <text x="400" y="366" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#7C8797">TODO: replace — see TODO-IMAGES.md</text>
+</svg>
