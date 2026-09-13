@@ -1,0 +1,109 @@
+'use client';
+
+import Image from 'next/image';
+import { PageHero } from '@/components/blocks/Hero';
+import { Section, SectionHeading } from '@/components/layout/Section';
+import { Card } from '@/components/ui/Card';
+import { TodoBadge } from '@/components/ui/Badge';
+import { CTABand } from '@/components/blocks/CTABand';
+import { Reveal } from '@/components/blocks/Reveal';
+import { useT } from '@/components/layout/LanguageProvider';
+import { about, aboutBuilt, config } from '@/content/site';
+
+/** Deliberately short. A thin About page beats a padded one. */
+export function AboutContent() {
+  const t = useT();
+
+  return (
+    <>
+      <PageHero eyebrow={t(about.hero.eyebrow)} title={t(about.hero.title)} sub={t(about.hero.sub)} />
+
+      <Section tone="white" size="narrow">
+        <h2 className="t-h2">{t(about.story.title)}</h2>
+        <p className="mt-5 text-lg text-ink-500">{t(about.story.body)}</p>
+
+        <h2 className="t-h2 mt-14">{t(about.mission.title)}</h2>
+        <p className="mt-5 text-lg text-ink-500">{t(about.mission.body)}</p>
+      </Section>
+
+      <Section tone="muted">
+        <SectionHeading title={t(about.building.title)} />
+        <div className="mt-12 grid gap-6 sm:grid-cols-2">
+          {aboutBuilt.map((item, index) => (
+            <Reveal key={item.title.en} delay={index * 60}>
+              <Card className="h-full">
+                <h3 className="t-h4 font-bold">{t(item.title)}</h3>
+                <p className="mt-2 text-[15px] text-ink-500">{t(item.body)}</p>
+              </Card>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      <Section tone="white">
+        <SectionHeading title={t(about.team.title)} sub={t(about.team.body)} />
+
+        <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+          {/* TODO-IMAGES: team and office photograph. */}
+          <Image
+            src="/images/placeholder-team.svg"
+            alt="The AdeelSab team at the Lahore office"
+            width={1200}
+            height={675}
+            className="h-auto w-full rounded-2xl border border-ink-200"
+          />
+
+          <div>
+            <Card>
+              <div className="flex items-start gap-4">
+                <Image
+                  src="/images/placeholder-founder.svg"
+                  alt="Founder of AdeelSab"
+                  width={400}
+                  height={400}
+                  className="h-16 w-16 shrink-0 rounded-full border border-ink-200"
+                />
+                <div>
+                  <p className="font-semibold text-ink-900">
+                    TODO: founder name
+                    <TodoBadge />
+                  </p>
+                  <p className="text-sm text-ink-400">Founder</p>
+                  <p className="mt-3 text-[15px] text-ink-500">
+                    TODO: one or two sentences in the founder&apos;s own words about why AdeelSab
+                    exists. Specific beats inspirational here.
+                  </p>
+                </div>
+              </div>
+            </Card>
+
+            <div className="mt-6 rounded-2xl border border-ink-200 bg-ink-050 p-6">
+              <h3 className="font-semibold text-ink-900">Registered details</h3>
+              <dl className="mt-3 space-y-2 text-[15px]">
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="text-ink-400">Entity:</dt>
+                  <dd>{config.legal.entity}</dd>
+                </div>
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="text-ink-400">SECP:</dt>
+                  <dd>{config.legal.secp}</dd>
+                </div>
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="text-ink-400">NTN:</dt>
+                  <dd>{config.legal.ntn}</dd>
+                </div>
+                <div className="flex flex-wrap gap-x-2">
+                  <dt className="text-ink-400">Office:</dt>
+                  <dd>{config.contact.addressLines.join(', ')}</dd>
+                </div>
+              </dl>
+              <TodoBadge>TODO: confirm all registration details</TodoBadge>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      <CTABand source="about" withForm={false} />
+    </>
+  );
+}
