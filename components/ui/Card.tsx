@@ -10,6 +10,8 @@ type CardProps = {
   /** Lifts on hover - only for cards that are themselves links. */
   interactive?: boolean;
   as?: 'div' | 'article' | 'li';
+  /** Anchor target, for cards deep-linked from other pages (e.g. /delivery#rto). */
+  id?: string;
 };
 
 const TONES = {
@@ -26,9 +28,11 @@ export function Card({
   tone = 'white',
   interactive = false,
   as: Tag = 'div',
+  id,
 }: CardProps) {
   return (
     <Tag
+      id={id}
       className={cn(
         'relative rounded-2xl border p-6 md:p-7',
         TONES[tone],
