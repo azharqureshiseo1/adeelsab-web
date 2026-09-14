@@ -43,7 +43,7 @@ The official SECP and FBR emblems are both displayed. The SECP badge carries its
 | 16 | Registered merchant count | `config.foundingSeller.registered` | `0` — **hand-updated, never a live counter** |
 | 17 | Support & business email addresses | `config.contact.supportEmail`, `businessEmail` | `support@` / `business@adeelsab.com` |
 | 19 | Office hours | `config.contact.hours` | Mon–Sat, 10:00–19:00 PKT |
-| 20 | Founder name, photo and one-line bio | `TrustBar.tsx`, `app/about/content.tsx` | `TODO: founder name` |
+| 20 | Founder name, photo and one-line bio | — | **Removed from the site.** Add back only with a real name, photo and quote — merchants convert better when a named person stands behind the platform |
 | 21 | ~~Social media handles~~ | `config.social` | ✅ Facebook, Instagram, TikTok, Threads (`adeelsab.pk`) |
 | 22 | Delivery timelines | `content/site.ts` → `deliveryTimelines` | Placeholder, needs checking against courier SLAs |
 | 23 | Open roles | `content/site.ts` → `openRoles` | Three plausible roles — confirm or empty the array |

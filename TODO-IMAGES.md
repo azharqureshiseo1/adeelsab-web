@@ -47,19 +47,41 @@ section and on `/about`.
 
 ---
 
-## 2. Courier and payment partner marks
+## 2. Courier and payment marks
+
+### Couriers — ✅ official artwork in place
+
+| File | Mark |
+|---|---|
+| `public/partners/tcs.png` | TCS |
+| `public/partners/leopards.png` | Leopards Courier |
+| `public/partners/postex.png` | PostEx |
+| `public/partners/mp.png` | Muller & Phipps |
+
+All four are trimmed transparent PNGs, 160px tall, shown greyscale with colour
+on hover. Each carries an optical size class in `PartnerLogos.tsx` — locking
+them all to one pixel height makes the wordmark-heavy ones read far larger than
+the compact ones, so they are nudged to match apparent weight.
+
+> ⚠️ **Get written permission before launch.** These are the single strongest
+> credibility element on the site, which is exactly why displaying them without
+> agreement is a real commercial risk. Ask when the courier terms are signed.
+
+### Own fleet — ✅ generated
+
+`public/partners/adeelsab-couriers-dark.png` and `-orange.png` are the
+**AdeelSab Couriers** lockup, composed from the real wordmark by
+`scripts/generate-brand-assets.py`. Naming the fleet turns a feature into a
+capability in the reader's mind. Re-run the script if the brand artwork changes.
+
+### Payment rails — still placeholders
 
 | File | Needed | Currently |
 |---|---|---|
-| `public/partners/tcs.svg` | Official TCS logo | Neutral text placeholder |
-| `public/partners/leopards.svg` | Official Leopards Courier logo | Neutral text placeholder |
-| `public/partners/postex.svg` | Official PostEx logo | Neutral text placeholder |
 | `public/partners/jazzcash.svg` | Official JazzCash logo | Neutral text placeholder |
 | `public/partners/easypaisa.svg` | Official Easypaisa logo | Neutral text placeholder |
 
-> ⚠️ **Get written permission before displaying these.** They are the single strongest credibility element on the site — a merchant has no basis to judge AdeelSab but knows TCS instantly — which is exactly why using them without agreement is a real commercial risk. Ask when the commercial terms are being signed.
-
-They appear on the home page and on `/delivery`, rendered in greyscale with colour on hover.
+Shown on `/delivery` (COD section) and `/payouts`.
 
 ---
 
@@ -75,7 +97,6 @@ They appear on the home page and on `/delivery`, rendered in greyscale with colo
 
 | File | Shot |
 |---|---|
-| `placeholder-founder.*` | Founder portrait. Plain background, natural light, approachable rather than corporate. Used on the home page trust bar and `/about`. |
 | `placeholder-team.*` | The team in the actual Lahore office. Used on `/about` and `/careers`. Candid beats lined-up. |
 | `placeholder-rider.*` | An AdeelSab rider with a branded box, on a real street. Used on `/delivery`. |
 

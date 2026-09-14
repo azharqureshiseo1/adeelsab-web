@@ -55,30 +55,7 @@ export function AboutContent() {
           />
 
           <div>
-            <Card>
-              <div className="flex items-start gap-4">
-                <Image
-                  src="/images/placeholder-founder.svg"
-                  alt="Founder of AdeelSab"
-                  width={400}
-                  height={400}
-                  className="h-16 w-16 shrink-0 rounded-full border border-ink-200"
-                />
-                <div>
-                  <p className="font-semibold text-ink-900">
-                    TODO: founder name
-                    <TodoBadge />
-                  </p>
-                  <p className="text-sm text-ink-400">Founder</p>
-                  <p className="mt-3 text-[15px] text-ink-500">
-                    TODO: one or two sentences in the founder&apos;s own words about why AdeelSab
-                    exists. Specific beats inspirational here.
-                  </p>
-                </div>
-              </div>
-            </Card>
-
-            <div className="mt-6 rounded-2xl border border-ink-200 bg-ink-050 p-6">
+            <div className="rounded-2xl border border-ink-200 bg-ink-050 p-6">
               <h3 className="font-semibold text-ink-900">Registered details</h3>
               <dl className="mt-3 space-y-2 text-[15px]">
                 <div className="flex flex-wrap gap-x-2">

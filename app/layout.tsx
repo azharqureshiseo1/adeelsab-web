@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    'AdeelSab is a Pakistani marketplace for local sellers, resellers and dropshippers. Own fleet in-city, nationwide delivery via TCS, Leopards and PostEx, and payouts on a fixed schedule.',
+    'AdeelSab is a Pakistani marketplace for local sellers, resellers and dropshippers. Own fleet in-city, nationwide delivery via TCS, Leopards, PostEx and M&P, and payouts on a fixed schedule.',
   applicationName: SITE_NAME,
   referrer: 'origin-when-cross-origin',
   formatDetection: { telephone: true, address: false, email: false },

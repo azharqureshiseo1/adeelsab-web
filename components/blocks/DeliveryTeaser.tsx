@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Section, SectionHeading } from '@/components/layout/Section';
-import { PartnerLogos } from './PartnerLogos';
+import { OwnFleetLogo, PartnerLogos } from './PartnerLogos';
 import { useT } from '@/components/layout/LanguageProvider';
 import { config, home } from '@/content/site';
 
@@ -19,10 +19,21 @@ export function DeliveryTeaser() {
       <SectionHeading title={t(home.delivery.title)} sub={t(home.delivery.sub)} />
 
       <div className="mt-12 rounded-2xl border border-ink-200 bg-white p-8 md:p-12">
-        <p className="text-center text-sm font-semibold uppercase tracking-wide text-ink-400">
-          Nationwide delivery partners
-        </p>
-        <PartnerLogos className="mt-8" />
+        <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-12">
+          <div className="text-center lg:text-start">
+            <p className="text-sm font-semibold uppercase tracking-wide text-brand-600">
+              Our own fleet
+            </p>
+            <OwnFleetLogo className="mx-auto mt-5 lg:mx-0" />
+          </div>
+
+          <div className="lg:border-s lg:border-ink-200 lg:ps-12">
+            <p className="text-center text-sm font-semibold uppercase tracking-wide text-ink-400">
+              Nationwide delivery partners
+            </p>
+            <PartnerLogos className="mt-6" />
+          </div>
+        </div>
 
         <div className="mt-10 grid gap-6 border-t border-ink-200 pt-8 text-center sm:grid-cols-3">
           <div>

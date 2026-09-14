@@ -8,17 +8,21 @@ import { Card } from '@/components/ui/Card';
 import { TodoBadge } from '@/components/ui/Badge';
 import { Table, TableWrap, Td, Th } from '@/components/ui/Table';
 import { CoverageMap } from '@/components/blocks/CoverageMap';
-import { PartnerLogos } from '@/components/blocks/PartnerLogos';
+import { OwnFleetLogo, PartnerLogos } from '@/components/blocks/PartnerLogos';
 import { RateCard } from '@/components/blocks/RateCard';
 import { HowItWorks } from '@/components/blocks/HowItWorks';
 import { CTABand } from '@/components/blocks/CTABand';
 import { useT } from '@/components/layout/LanguageProvider';
-import { delivery, deliveryTimelines, returnSteps, whoPaysOptions } from '@/content/site';
+import { config, delivery, deliveryTimelines, returnSteps, whoPaysOptions } from '@/content/site';
 
 const COURIER_NOTES = [
   { name: 'TCS', note: 'The widest recognised network in Pakistan, including remote districts.' },
   { name: 'Leopards', note: 'Strong secondary-city coverage and reliable COD remittance.' },
   { name: 'PostEx', note: 'Built for e-commerce, with fast COD settlement back to the platform.' },
+  {
+    name: 'Muller & Phipps',
+    note: 'Long-established distribution reach, particularly for bulk and business addresses.',
+  },
 ];
 
 export function DeliveryContent() {
@@ -68,13 +72,32 @@ export function DeliveryContent() {
         </div>
       </Section>
 
-      {/* Partners */}
+      {/* Own fleet, then the partner network. Kept apart on purpose: one is ours
+          and under our control, the other is not. */}
       <Section tone="white" id="partners">
         <SectionHeading title={t(delivery.partners.title)} sub={t(delivery.partners.sub)} />
-        <div className="mt-10">
+
+        <Card emphasis className="mt-10">
+          <div className="grid items-center gap-6 md:grid-cols-[auto_1fr] md:gap-10">
+            <OwnFleetLogo className="mx-auto md:mx-0" />
+            <div>
+              <h3 className="t-h4 font-bold">Our own riders, in our launch cities</h3>
+              <p className="mt-2 text-[15px] text-ink-500">
+                Inside {config.ownFleetCities.join(', ')} your parcels are carried by our own fleet.
+                We set the pickup times, we answer for the delivery, and nothing is subcontracted.
+              </p>
+            </div>
+          </div>
+        </Card>
+
+        <p className="mt-12 text-center text-sm font-semibold uppercase tracking-wide text-ink-400">
+          Nationwide, through established couriers
+        </p>
+        <div className="mt-8">
           <PartnerLogos />
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {COURIER_NOTES.map((courier) => (
             <Card key={courier.name} tone="muted">
               <h3 className="t-h4 font-bold">{courier.name}</h3>

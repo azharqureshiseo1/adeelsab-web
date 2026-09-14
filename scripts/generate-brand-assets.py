@@ -125,3 +125,58 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+def build_couriers_lockup() -> None:
+    """
+    Builds the AdeelSab Couriers lockup for the owned delivery fleet.
+
+    Naming the fleet turns a feature into a capability in the reader's mind -
+    the same move Daraz made with Daraz Express. It is composed from the real
+    wordmark rather than redrawn, so it stays in step if the brand changes.
+
+    Two files: `-dark` for light surfaces, `-orange` for dark ones.
+    """
+    for variant in ("dark", "orange"):
+        wordmark = Image.open(BRAND / f"adeelsab-logo-{variant}.png").convert("RGBA")
+        wordmark = wordmark.crop(wordmark.getbbox())
+
+        scale = 900 / wordmark.width
+        wordmark = wordmark.resize(
+            (900, max(1, round(wordmark.height * scale))), Image.LANCZOS
+        )
+
+        label = "COURIERS"
+        font = load_font(112)
+        ink = INK if variant == "dark" else ORANGE
+
+        # Render the label on its own first, so the lockup can be spaced from the
+        # glyphs' real bounds rather than the font's em box, which carries a lot
+        # of empty ascent above capitals.
+        tracking = 16
+        scratch = Image.new("RGBA", (900, 320), (0, 0, 0, 0))
+        sdraw = ImageDraw.Draw(scratch)
+        widths = [sdraw.textlength(ch, font=font) for ch in label]
+        total = sum(widths) + tracking * (len(label) - 1)
+        x = (900 - total) / 2
+        for ch, w in zip(label, widths):
+            sdraw.text((x, 60), ch, font=font, fill=ink)
+            x += w + tracking
+        label_img = scratch.crop(scratch.getbbox())
+
+        gap = round(wordmark.height * 0.04)
+        canvas = Image.new(
+            "RGBA", (900, wordmark.height + gap + label_img.height), (0, 0, 0, 0)
+        )
+        canvas.paste(wordmark, (0, 0), wordmark)
+        canvas.paste(
+            label_img, ((900 - label_img.width) // 2, wordmark.height + gap), label_img
+        )
+
+        out = canvas.crop(canvas.getbbox())
+        out.save(PUBLIC / "partners" / f"adeelsab-couriers-{variant}.png", optimize=True)
+        print(f"  adeelsab-couriers-{variant}.png  {out.size}")
+
+
+if __name__ == "__main__":
+    build_couriers_lockup()

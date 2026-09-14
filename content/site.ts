@@ -193,7 +193,7 @@ export const home = {
   meta: {
     title: 'AdeelSab - Sell across Pakistan. We handle the rest.',
     description:
-      'AdeelSab is a Pakistani marketplace for local sellers, resellers and dropshippers. Own fleet in-city, nationwide delivery via TCS, Leopards and PostEx. Join the Founding Seller Program before launch.',
+      'AdeelSab is a Pakistani marketplace for local sellers, resellers and dropshippers. Own fleet in-city, nationwide delivery via TCS, Leopards, PostEx and M&P. Join the Founding Seller Program before launch.',
   },
 
   hero: {
@@ -257,8 +257,8 @@ export const home = {
       'وہ ڈیلیوری جس پر آپ کے گاہک پہلے ہی اعتماد کرتے ہیں',
     ),
     sub: t(
-      'Our own riders inside our launch cities. TCS, Leopards and PostEx everywhere else in Pakistan.',
-      'ہمارے اپنے رائیڈرز لانچ شہروں میں۔ باقی پورے پاکستان میں TCS، Leopards اور PostEx۔',
+      'Our own riders inside our launch cities. TCS, Leopards, PostEx and M&P everywhere else in Pakistan.',
+      'ہمارے اپنے رائیڈرز لانچ شہروں میں۔ باقی پورے پاکستان میں TCS، Leopards، PostEx اور M&P۔',
     ),
     cta: t('See coverage, timelines and rates', 'کوریج، اوقات اور ریٹ دیکھیں'),
   },
@@ -383,14 +383,14 @@ export const capabilities: Capability[] = [
     // TODO: confirm launch cities
     value: t(`${config.ownFleetCities.length} cities`, `${config.ownFleetCities.length} شہر`),
     label: t(
-      `Own fleet in ${config.ownFleetCities.join(', ')}`,
-      `اپنی فلیٹ: ${config.ownFleetCities.join('، ')}`,
+      `AdeelSab Couriers in ${config.ownFleetCities.join(', ')}`,
+      `ایڈیل صاحب کورئیرز: ${config.ownFleetCities.join('، ')}`,
     ),
   },
   {
     icon: 'map',
     value: t('Nationwide', 'ملک بھر'),
-    label: t('Delivery via TCS, Leopards and PostEx', 'TCS، Leopards اور PostEx کے ذریعے ڈیلیوری'),
+    label: t('Delivery via TCS, Leopards, PostEx and M&P', 'TCS، Leopards، PostEx اور M&P کے ذریعے ڈیلیوری'),
   },
   {
     icon: 'banknote',
@@ -731,8 +731,8 @@ export const localSellerObjections: Array<{ q: Copy; a: Copy; link?: { label: Co
     {
       q: t('Will it reach my customers?', 'کیا یہ میرے گاہکوں تک پہنچے گا؟'),
       a: t(
-        `Our own riders cover ${config.ownFleetCities.join(', ')}. Everywhere else in Pakistan is covered by TCS, Leopards and PostEx - the same couriers your customers already receive parcels from. Gilgit, Turbat, Chitral: yes.`,
-        `ہمارے اپنے رائیڈرز ${config.ownFleetCities.join('، ')} میں ہیں۔ باقی پورے پاکستان میں TCS، Leopards اور PostEx — وہی کورئیر جن سے آپ کے گاہک پہلے ہی پارسل لیتے ہیں۔`,
+        `Our own riders cover ${config.ownFleetCities.join(', ')}. Everywhere else in Pakistan is covered by TCS, Leopards, PostEx and M&P - the same couriers your customers already receive parcels from. Gilgit, Turbat, Chitral: yes.`,
+        `ہمارے اپنے رائیڈرز ${config.ownFleetCities.join('، ')} میں ہیں۔ باقی پورے پاکستان میں TCS، Leopards، PostEx اور M&P — وہی کورئیر جن سے آپ کے گاہک پہلے ہی پارسل لیتے ہیں۔`,
       ),
       link: { label: t('See the coverage map', 'کوریج نقشہ دیکھیں'), href: '/delivery' },
     },
@@ -995,7 +995,7 @@ export const delivery = {
   meta: {
     title: 'Delivery & Coverage - AdeelSab',
     description:
-      'Own fleet inside our launch cities, nationwide coverage through TCS, Leopards and PostEx. Full rate card, COD remittance schedule and RTO charges stated openly.',
+      'Own fleet inside our launch cities, nationwide coverage through TCS, Leopards, PostEx and M&P. Full rate card, COD remittance schedule and RTO charges stated openly.',
   },
   hero: {
     eyebrow: t('Delivery & coverage', 'ڈیلیوری اور کوریج'),
@@ -1078,22 +1078,22 @@ export const deliveryTimelines: Array<{ zone: Copy; time: Copy; by: Copy }> = [
   {
     zone: t('Within an own-fleet city', 'اپنی فلیٹ والے شہر کے اندر'),
     time: t('Same day to next day', 'اسی دن یا اگلے دن'), // TODO: confirm
-    by: t('AdeelSab fleet', 'ایڈیل صاحب فلیٹ'),
+    by: t('AdeelSab Couriers', 'ایڈیل صاحب کورئیرز'),
   },
   {
     zone: t('Major cities', 'بڑے شہر'),
     time: t('2 to 3 working days', '2 سے 3 کاروباری دن'), // TODO: confirm
-    by: t('TCS / Leopards / PostEx', 'TCS / Leopards / PostEx'),
+    by: t('TCS / Leopards / PostEx / M&P', 'TCS / Leopards / PostEx / M&P'),
   },
   {
     zone: t('Rest of Pakistan', 'باقی پاکستان'),
     time: t('3 to 5 working days', '3 سے 5 کاروباری دن'), // TODO: confirm
-    by: t('TCS / Leopards / PostEx', 'TCS / Leopards / PostEx'),
+    by: t('TCS / Leopards / PostEx / M&P', 'TCS / Leopards / PostEx / M&P'),
   },
   {
     zone: t('Remote and northern areas', 'دور دراز اور شمالی علاقے'),
     time: t('5 to 7 working days', '5 سے 7 کاروباری دن'), // TODO: confirm
-    by: t('TCS / Leopards', 'TCS / Leopards'),
+    by: t('TCS / Leopards / M&P', 'TCS / Leopards / M&P'),
   },
 ];
 
@@ -1470,7 +1470,7 @@ export const aboutBuilt: Array<{ title: Copy; body: Copy }> = [
     ),
   },
   {
-    title: t('An in-city delivery fleet', 'شہری ڈیلیوری فلیٹ'),
+    title: t('AdeelSab Couriers, our own fleet', 'ایڈیل صاحب کورئیرز — ہماری اپنی فلیٹ'),
     body: t(
       `Our own riders in ${config.ownFleetCities.join(', ')}, under our direct control rather than subcontracted.`,
       `${config.ownFleetCities.join('، ')} میں ہمارے اپنے رائیڈرز، ہماری براہِ راست نگرانی میں۔`,
@@ -1479,8 +1479,8 @@ export const aboutBuilt: Array<{ title: Copy; body: Copy }> = [
   {
     title: t('National courier relationships', 'ملک گیر کورئیر تعلقات'),
     body: t(
-      'Working arrangements with TCS, Leopards and PostEx so that every address in Pakistan is reachable from day one.',
-      'TCS، Leopards اور PostEx کے ساتھ معاہدے تاکہ پہلے دن سے پاکستان کا ہر پتہ قابلِ رسائی ہو۔',
+      'Working arrangements with TCS, Leopards, PostEx and M&P so that every address in Pakistan is reachable from day one.',
+      'TCS، Leopards، PostEx اور M&P کے ساتھ معاہدے تاکہ پہلے دن سے پاکستان کا ہر پتہ قابلِ رسائی ہو۔',
     ),
   },
   {
