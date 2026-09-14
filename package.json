@@ -5,11 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:static": "node scripts/build-static.mjs",
     "start": "node server.js",
     "lint": "next lint",
-    "postbuild": "node scripts/copy-api.mjs",
-    "publish": "npm run build && node scripts/publish-deploy-branch.mjs",
-    "build:node": "node scripts/build-node.mjs"
+    "publish": "npm run build:static && node scripts/publish-deploy-branch.mjs"
   },
   "dependencies": {
     "next": "15.5.4",
@@ -32,5 +31,8 @@
     "eslint": "^9.35.0",
     "eslint-config-next": "15.5.4",
     "prettier": "^3.6.2"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

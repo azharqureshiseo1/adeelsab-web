@@ -7,15 +7,10 @@
  *
  * Before this will work:
  *   npm ci
- *   npm run build:node     <- NOT `npm run build`, which makes a static export
+ *   npm run build
  *
  * The port comes from the environment, because the panel assigns one.
  */
-
-// next.config.mjs is read again at runtime, not just at build time. This file
-// only ever runs the server target, so it declares that itself rather than
-// relying on an env var being set the same way at build and at boot.
-process.env.BUILD_TARGET = 'node';
 
 const { createServer } = require('node:http');
 const next = require('next');

@@ -21,17 +21,24 @@ npm run dev
 Then open `http://localhost:3000`.
 
 ```bash
-npm run build      # static export to out/, then copies the PHP endpoint in
-npm run build:node # server build instead, for hosting that can run Node
-npm start          # runs the server build (server.js)
-npm run publish    # build + push the built site to the `deploy` branch
+npm run build        # server build (the default) — what a host runs
+npm start            # serves it, via server.js
+npm run build:static # static export to out/ instead, for hosting without Node
+npm run publish      # static build + push it to the `deploy` branch
 npm run lint
 ```
 
-Two build targets, one codebase. Static is the default and runs on any shared
-hosting. The Node target exists for a VPS and is documented in
-[DEPLOY-NODE.md](./DEPLOY-NODE.md) — it is not needed today, since no page
-renders per request.
+**Two targets, one codebase.** Server is the default, because any panel that runs
+`npm install && npm run build && npm start` must end up with something `npm
+start` can serve. The static export is opt-in for hosting that cannot run Node.
+
+The only thing that differs between them is the waitlist endpoint, and the
+config picks it automatically:
+
+| Target | Form posts to | Leads go to |
+|---|---|---|
+| Server | `/api/submit/` — a route handler | Email or webhook, via env vars |
+| Static | `/api/submit.php` | A CSV outside the web root |
 
 ---
 
@@ -164,17 +171,12 @@ Copy `.env.example` to `.env.local`. All are optional in development.
 
 ## Deployment
 
-Three routes, all landing the same static site in `public_html` — pick one in [DEPLOY.md](./DEPLOY.md):
+| Where | Guide | Update with |
+|---|---|---|
+| **Hostinger Web Apps** (Business+) | [DEPLOY-HOSTINGER-WEBAPP.md](./DEPLOY-HOSTINGER-WEBAPP.md) | `git push origin main` |
+| Vercel or similar | [DEPLOY-HOSTINGER-WEBAPP.md](./DEPLOY-HOSTINGER-WEBAPP.md) — same settings, detected automatically | `git push origin main` |
+| Shared hosting, no Node | [DEPLOY.md](./DEPLOY.md) | `npm run publish`, FTP, or a zip |
+| A VPS you manage | [DEPLOY-NODE.md](./DEPLOY-NODE.md) | `git pull && npm run build && pm2 restart` |
 
-| Route | Update with |
-|---|---|
-| **Hostinger Git deploy** | `npm run publish` — pushes the built site to the `deploy` branch, which Hostinger clones |
-| **GitHub Actions over FTP** | `git push origin main` |
-| **Manual zip upload** | Re-upload `out/` |
-
-`main` holds source and is **not** servable on its own. Hostinger's shared hosting
-clones a branch straight into the web root without building, which is why the
-`deploy` branch exists: it is the finished site, `index.html` at its root.
-
-The storage directory for leads must sit **outside** `public_html` — see
-[DEPLOY.md](./DEPLOY.md), and verify it after the first deploy.
+For the static routes, the leads CSV must sit **outside** the web root — check
+that after the first deploy, it is the one mistake that exposes every lead.
