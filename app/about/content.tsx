@@ -45,12 +45,11 @@ export function AboutContent() {
         <SectionHeading title={t(about.team.title)} sub={t(about.team.body)} />
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
-          {/* TODO-IMAGES: team and office photograph. */}
           <Image
-            src="/images/placeholder-team.svg"
-            alt="The AdeelSab team at the Lahore office"
-            width={1200}
-            height={675}
+            src="/images/team-office.webp"
+            alt="The AdeelSab team at work in the Lahore office"
+            width={1672}
+            height={941}
             className="h-auto w-full rounded-2xl border border-ink-200"
           />
 

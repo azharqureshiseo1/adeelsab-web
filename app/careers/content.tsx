@@ -42,12 +42,11 @@ export function CareersContent() {
           ))}
         </div>
 
-        {/* TODO-IMAGES: real team and office photography. */}
         <Image
-          src="/images/placeholder-team.svg"
+          src="/images/team-office.webp"
           alt="The AdeelSab office in Lahore"
-          width={1200}
-          height={675}
+          width={1672}
+          height={941}
           className="mt-12 h-auto w-full rounded-2xl border border-ink-200"
         />
       </Section>

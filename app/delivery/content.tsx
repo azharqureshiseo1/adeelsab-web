@@ -34,6 +34,10 @@ export function DeliveryContent() {
         eyebrow={t(delivery.hero.eyebrow)}
         title={t(delivery.hero.title)}
         sub={t(delivery.hero.sub)}
+        image={{
+          src: '/images/adeelsab-rider.webp',
+          alt: 'An AdeelSab Couriers rider with a branded delivery box',
+        }}
       />
 
       <Section tone="white" id="coverage">

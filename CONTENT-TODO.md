@@ -49,8 +49,8 @@ The official SECP and FBR emblems are both displayed. The SECP badge carries its
 | 23 | Open roles | `content/site.ts` → `openRoles` | Three plausible roles — confirm or empty the array |
 | 24 | Mobile app at launch? | `config.mobileAppAtLaunch` | `false`. If true, footer and CTAs need app-store links |
 | 25 | Notification email for leads | `public/api/submit.php` → `NOTIFY_EMAIL` | `leads@adeelsab.com` |
-| 27 | **Is Stripe actually the card processor?** | `PartnerLogos.tsx` → `CHECKOUT_METHODS` | Stripe does not onboard Pakistan-registered businesses. If card payments run through a local gateway instead, swap the mark; if there is no card acceptance at launch, remove it and the "or card" wording in `howItWorks.money.body` |
 | 26 | Accelerated COD settlement? | — | **Not claimed anywhere on the site.** If PostEx or another partner permits faster payout than competitors, that belongs in the homepage headline — it is weighted more heavily than commission rate by most Pakistani merchants |
+| 27 | **Is Stripe actually the card processor?** | `PartnerLogos.tsx` → `CHECKOUT_METHODS` | Stripe does not onboard Pakistan-registered businesses. If card payments run through a local gateway instead, swap the mark; if there is no card acceptance at launch, remove it and the "or card" wording in `howItWorks.money.body` |
 
 ---
 

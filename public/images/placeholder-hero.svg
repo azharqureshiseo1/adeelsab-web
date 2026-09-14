@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 700" width="880" height="700" role="img" aria-label="Pakistani shop owner packing an order">
-  <title>Pakistani shop owner packing an order</title>
-  <rect width="880" height="700" fill="#F1F4F7"/>
-  <rect x="1" y="1" width="878" height="698" fill="none" stroke="#E2E6EB" stroke-width="2" rx="16"/>
-  <circle cx="440" cy="332" r="30" fill="#FFE2D2"/>
-  <path d="M426 332 l10 10 18 -20" fill="none" stroke="#FB5301" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="440" y="392" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="16" fill="#7C8797">Pakistani shop owner packing an order</text>
-  <text x="440" y="416" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="13" fill="#7C8797">TODO: replace — see TODO-IMAGES.md</text>
-</svg>

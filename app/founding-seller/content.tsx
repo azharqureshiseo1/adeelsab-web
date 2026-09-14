@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Award, Camera, Check, Headset, Percent, Star } from 'lucide-react';
 import { PageHero } from '@/components/blocks/Hero';
 import { Section, SectionHeading } from '@/components/layout/Section';
@@ -90,6 +91,13 @@ export function FoundingSellerContent() {
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
             <h2 className="t-h2">{t(foundingSeller.need.title)}</h2>
+            <Image
+              src="/images/branded-packaging.webp"
+              alt="An AdeelSab parcel sealed and labelled, ready for dispatch"
+              width={1672}
+              height={941}
+              className="mt-6 h-auto w-full rounded-2xl border border-ink-200"
+            />
             <ul className="mt-6 space-y-4">
               {foundingRequirements.map((item) => (
                 <li key={item.en} className="flex gap-3">

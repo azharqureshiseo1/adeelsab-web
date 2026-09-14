@@ -35,6 +35,10 @@ export function LocalSellersContent() {
         eyebrow={t(localSellers.hero.eyebrow)}
         title={t(localSellers.hero.title)}
         sub={t(localSellers.hero.sub)}
+        image={{
+          src: '/images/merchant-wholesale-market.webp',
+          alt: 'A wholesale market shop owner taking an order on his phone',
+        }}
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <ButtonLink

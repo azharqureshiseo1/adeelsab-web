@@ -8,6 +8,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { useT } from '@/components/layout/LanguageProvider';
 import { trackEvent } from '@/lib/analytics';
 import { common, home } from '@/content/site';
+import { cn } from '@/lib/utils';
 
 /**
  * Light hero on purpose. A dark hero with floating cards reads as a template,
@@ -53,13 +54,15 @@ export function Hero() {
               className="bg-brand-gradient absolute -end-4 -top-6 h-48 w-48 rounded-[40%] opacity-20 blur-[2px] md:h-64 md:w-64"
             />
             <div className="relative overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-[0_2px_6px_rgba(16,24,32,.08),0_16px_40px_rgba(16,24,32,.1)]">
-              {/* TODO-IMAGES: replace with a real photograph of a Pakistani merchant. */}
               <Image
-                src="/images/placeholder-hero.svg"
+                src="/images/seller-packing-order.webp"
                 alt={t(home.hero.imageAlt)}
-                width={880}
-                height={700}
+                width={1672}
+                height={941}
                 priority
+                // Largest contentful paint on the whole site, so it is eager and
+                // given an explicit size hint rather than the 100vw default.
+                sizes="(min-width: 1024px) 40vw, 100vw"
                 className="h-auto w-full"
               />
             </div>
@@ -77,25 +80,49 @@ export function PageHero({
   sub,
   children,
   tone = 'muted',
+  image,
 }: {
   eyebrow?: string;
   title: string;
   sub?: string;
   children?: React.ReactNode;
   tone?: 'muted' | 'white';
+  /** Optional supporting photograph, shown beside the copy from `lg` up. */
+  image?: { src: string; alt: string };
 }) {
   return (
     <section className={tone === 'muted' ? 'bg-ink-050' : 'bg-white'}>
       <Container size="wide">
-        <div className="max-w-3xl py-12 md:py-20">
-          {eyebrow ? (
-            <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-600">
-              {eyebrow}
-            </p>
+        <div
+          className={cn(
+            'py-12 md:py-20',
+            image ? 'grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-14' : 'max-w-3xl',
+          )}
+        >
+          <div className={image ? 'max-w-2xl' : undefined}>
+            {eyebrow ? (
+              <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-brand-600">
+                {eyebrow}
+              </p>
+            ) : null}
+            <h1 className="t-h1">{title}</h1>
+            {sub ? <p className="mt-5 text-lg text-ink-500">{sub}</p> : null}
+            {children ? <div className="mt-8">{children}</div> : null}
+          </div>
+
+          {image ? (
+            <div className="overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-[0_2px_6px_rgba(16,24,32,.08),0_16px_40px_rgba(16,24,32,.1)]">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                width={1672}
+                height={941}
+                priority
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                className="h-auto w-full"
+              />
+            </div>
           ) : null}
-          <h1 className="t-h1">{title}</h1>
-          {sub ? <p className="mt-5 text-lg text-ink-500">{sub}</p> : null}
-          {children ? <div className="mt-8">{children}</div> : null}
         </div>
       </Container>
     </section>

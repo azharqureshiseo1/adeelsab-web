@@ -121,35 +121,39 @@ python scripts/generate-coverage-map.py countries-50m.json
 
 ---
 
-## 3. Photography
+## 3. Photography — ✅ in place
 
-### Priority 1 — the hero
-
-| File | Shot | Notes |
-|---|---|---|
-| `public/images/placeholder-hero.*` | **A real shop owner packing an order** | Portrait or 4:5, shot in a real shop or godown. Natural light. The person should be doing something, not posing at the camera. This is the first thing every visitor sees. |
-
-### Priority 2 — trust and credibility
-
-| File | Shot |
+| File | Used on |
 |---|---|
-| `placeholder-team.*` | The team in the actual Lahore office. Used on `/about` and `/careers`. Candid beats lined-up. |
-| `placeholder-rider.*` | An AdeelSab rider with a branded box, on a real street. Used on `/delivery`. |
+| `seller-packing-order.webp` | Home hero |
+| `merchant-wholesale-market.webp` | `/sell/local-sellers` hero |
+| `adeelsab-rider.webp` | `/delivery` hero |
+| `branded-packaging.webp` | `/founding-seller`, beside "what we need from you" |
+| `team-office.webp` | `/about` and `/careers` |
 
-### Priority 3 — supporting
+All five are 1672×941 WebP, around 80–105 KB each, and every one is branded and
+shot in a recognisably Pakistani setting — which is the point. The home hero is
+the site's largest contentful paint, so it loads eagerly with an explicit
+`sizes` hint.
 
-| File | Shot |
-|---|---|
-| `placeholder-merchant.*` | A merchant at their counter, ideally in a recognisable wholesale market |
-| `placeholder-packaging.*` | Branded AdeelSab packaging, sealed and labelled. Doubles as reference for the packaging guide. |
-| `placeholder-warehouse.*` | Sorting and dispatch, parcels being scanned or loaded |
+> **One thing worth deciding.** These are rendered images, not photographs of
+> the actual shop, riders, office or staff. On a site whose whole argument is
+> "we publish the real number, including the ones you won't like", a rendered
+> office is the visual equivalent of a claim that cannot be checked. It is a
+> reasonable stand-in before launch; replacing the team and rider shots with
+> real ones once the office and fleet exist would cost little and remove the
+> gap. Your call.
 
-### Article images
+### Still missing
 
-The Seller Hub articles are currently text-only. Two would benefit materially from illustration:
-
-- **`product-photography-with-a-phone`** — a side-by-side of a bad photograph (yellow light, patterned bedsheet) and a good one (daylight, plain background) of the *same* product. This single image would teach more than the article does.
-- **`packaging-guide`** — a sequence showing the three layers, and one of a correctly attached airway bill.
+- **Founder portrait** — the founder block was removed from the trust bar and
+  `/about` rather than left as a placeholder. Add it back with a real name,
+  face and one-line quote; merchants convert better when a named person stands
+  behind a new platform.
+- **Article images** — the Seller Hub pieces are still text only. Two would earn
+  their place: a bad-vs-good photograph pair in
+  `product-photography-with-a-phone`, and a packing sequence in
+  `packaging-guide`.
 
 ---
 
