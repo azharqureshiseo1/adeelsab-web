@@ -22,8 +22,16 @@ Then open `http://localhost:3000`.
 
 ```bash
 npm run build      # static export to out/, then copies the PHP endpoint in
+npm run build:node # server build instead, for hosting that can run Node
+npm start          # runs the server build (server.js)
+npm run publish    # build + push the built site to the `deploy` branch
 npm run lint
 ```
+
+Two build targets, one codebase. Static is the default and runs on any shared
+hosting. The Node target exists for a VPS and is documented in
+[DEPLOY-NODE.md](./DEPLOY-NODE.md) — it is not needed today, since no page
+renders per request.
 
 ---
 

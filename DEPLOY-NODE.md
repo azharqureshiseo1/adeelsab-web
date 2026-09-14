@@ -1,65 +1,99 @@
-# Node.js deployment — NOT USED BY DEFAULT
+# Running AdeelSab as a Node.js app
 
-> **Read this first.** The site currently deploys as a **static export** to Hostinger shared hosting, documented in [DEPLOY.md](./DEPLOY.md). That is the supported path and the one the GitHub Action implements.
->
-> This document exists only for the case where the hosting is moved to a Hostinger **VPS** or a **Node.js Web App** plan. Do not follow it otherwise.
+The same codebase builds two ways. This file covers the second one.
+
+| | `npm run build` | `npm run build:node` |
+|---|---|---|
+| Output | `out/` — plain HTML/CSS/JS | `.next/` — a server build |
+| Needs | Any web hosting | A host that can run Node |
+| Started by | Nothing; files are served | `npm start` (`server.js`) |
+| Image optimisation | No | **Yes** |
+| Process to keep alive | None | One, forever |
+| Works on Hostinger **shared** hosting | **Yes** | **No** |
+
+**Read that last row before going further.** Hostinger's shared plans (Premium,
+Business, and the Web Hosting tiers) cannot run a Node process at all. There is
+no setting to enable it. If that is your plan, the Node route is not available
+and [DEPLOY.md](./DEPLOY.md) is the file you want — the site it produces is the
+same Next.js site, just prerendered.
+
+Node needs **Hostinger VPS**, or another host that offers Node hosting.
 
 ---
 
-## What changes
+## What you gain, honestly
 
-Running a Node server rather than exporting static files buys you: API routes, Server Actions, middleware, ISR, and `next/image` optimisation. It costs you a process that has to stay alive, and a hosting plan that supports one.
+Very little today.
 
-Nothing on this site currently needs any of those. The waitlist form is handled by a PHP file precisely so that it does not.
+The site has no API routes, no server actions, no per-request rendering and no
+logged-in state. Every page is the same for everyone, so there is nothing for a
+server to decide. The one real benefit is automatic image optimisation.
+
+The reason to move later is a feature, not performance: a real seller login,
+server-side integration with the marketplace application, or personalised pages.
+Until one of those exists, a Node process is a thing that can crash, run out of
+memory and need restarting, in exchange for image resizing.
 
 ---
 
-## Steps
-
-### 1. Remove the static export configuration
-
-In `next.config.mjs`:
-
-```js
-const nextConfig = {
-  // output: 'export',          <- remove
-  trailingSlash: true,
-  // images: { unoptimized: true },  <- remove to enable image optimisation
-};
-```
-
-### 2. Replace the PHP endpoint with a route handler
-
-With a server available, `public/api/submit.php` should be replaced by `app/api/submit/route.ts`, and `NEXT_PUBLIC_FORM_ENDPOINT` changed to `/api/submit`.
-
-Port the logic from the PHP file as-is — it already implements honeypot rejection, server-side validation, IP rate limiting, append-only storage and email notification. Do not drop any of those in the rewrite.
-
-Also delete the `postbuild` copy step from `package.json` and the "Verify the PHP endpoint shipped" step from the workflow, both of which exist only for the static path.
-
-### 3. Build and run
+## Build and run locally
 
 ```bash
 npm ci
-npm run build
-npx next start -p 3000
+npm run build:node     # NOT `npm run build`, which makes a static export
+npm start              # serves on http://localhost:3000
 ```
 
-### 4. Keep it alive
-
-On a VPS, use a process manager rather than a bare `next start`:
+`npm start` runs `server.js`. Set `PORT` to change the port:
 
 ```bash
-npm install -g pm2
-pm2 start "npx next start -p 3000" --name adeelsab
-pm2 save
-pm2 startup
+PORT=8080 npm start
 ```
 
-On a Hostinger Node.js Web App plan, set the start command in hPanel instead — the platform supervises the process itself.
+`server.js` sets `BUILD_TARGET=node` itself, so you never have to remember an
+environment variable — `next.config.mjs` reads it at boot as well as at build.
 
-### 5. Reverse proxy
+---
 
-Point Nginx at the Node process:
+## Hostinger VPS
+
+### 1. Install Node
+
+SSH in and install Node 20 or newer:
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs git
+node -v
+```
+
+### 2. Get the code and build
+
+```bash
+cd /var/www
+git clone https://github.com/azharqureshiseo1/adeelsab-web.git
+cd adeelsab-web
+npm ci
+npm run build:node
+```
+
+### 3. Keep it alive with PM2
+
+A bare `npm start` dies when you close the terminal, and does not come back
+after a reboot.
+
+```bash
+sudo npm install -g pm2
+pm2 start npm --name adeelsab -- start
+pm2 save
+pm2 startup          # run the command it prints
+```
+
+Useful afterwards: `pm2 logs adeelsab`, `pm2 restart adeelsab`, `pm2 status`.
+
+### 4. Put Nginx in front
+
+Node should not face the internet directly. Nginx terminates TLS and forwards:
 
 ```nginx
 server {
@@ -89,18 +123,64 @@ server {
 }
 ```
 
-Note that `X-Forwarded-For` must be passed through, otherwise the rate limiter sees every request as coming from the proxy.
+Pass `X-Forwarded-For` through. Without it the waitlist rate limiter sees every
+request as coming from the proxy and throttles everyone together.
 
-### 6. Change the deployment method
-
-FTP upload no longer makes sense — there is no `out/` folder. Replace the FTP step in `.github/workflows/deploy.yml` with an SSH deploy that pulls, builds and restarts:
+Then:
 
 ```bash
-ssh user@host 'cd /var/www/adeelsab && git pull && npm ci && npm run build && pm2 reload adeelsab'
+sudo certbot --nginx -d adeelsab.com -d www.adeelsab.com
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+### 5. The waitlist form
+
+The form still posts to `public/api/submit.php`, which **PHP** executes — Node
+does not. On a VPS you have two choices:
+
+**Keep PHP.** Install PHP-FPM and add a location block for `/api/`. Fine, and no
+code changes.
+
+**Port it to a route handler.** Move the logic from `public/api/submit.php` into
+`app/api/submit/route.ts` and set `NEXT_PUBLIC_FORM_ENDPOINT=/api/submit`. Carry
+over all of it: honeypot rejection, server-side validation, IP rate limiting,
+append-only storage and the notification email. Dropping any of those loses
+leads or opens the endpoint to abuse.
+
+Either way, the storage directory must stay outside the web root.
+
+### 6. Updating
+
+```bash
+cd /var/www/adeelsab-web
+git pull
+npm ci
+npm run build:node
+pm2 restart adeelsab
 ```
 
 ---
 
-## Before switching
+## Hostinger's "Node.js app" panel entry
 
-Be clear about why. The static path has no server to patch, no process to crash, no memory limit to exhaust, and runs on the cheapest plan available. Move only when a feature genuinely requires a server — most likely a real seller login, or server-side integration with the marketplace application.
+Some plans expose **Advanced → Node.js** in hPanel. If yours does:
+
+| Field | Value |
+|---|---|
+| Application root | the folder you uploaded or cloned into |
+| Application startup file | `server.js` |
+| Node version | 20 or newer |
+| Application mode | Production |
+
+Then use the panel's **Run npm install**, and run `npm run build:node` from its
+terminal before starting. The panel assigns `PORT` itself; `server.js` reads it.
+
+If there is no **Node.js** entry under Advanced, the plan cannot run Node. That
+is the whole answer — not a setting that needs finding.
+
+---
+
+## Going back to static
+
+Nothing to undo. `npm run build` still produces `out/` exactly as before; the
+two targets live side by side in `next.config.mjs`.
