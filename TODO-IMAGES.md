@@ -74,14 +74,28 @@ the compact ones, so they are nudged to match apparent weight.
 `scripts/generate-brand-assets.py`. Naming the fleet turns a feature into a
 capability in the reader's mind. Re-run the script if the brand artwork changes.
 
-### Payment rails — still placeholders
+### Payment marks — ✅ official artwork in place
 
-| File | Needed | Currently |
+| File | Mark | Shown as |
 |---|---|---|
-| `public/partners/jazzcash.svg` | Official JazzCash logo | Neutral text placeholder |
-| `public/partners/easypaisa.svg` | Official Easypaisa logo | Neutral text placeholder |
+| `public/partners/jazzcash.png` | JazzCash | Payout rail **and** checkout method |
+| `public/partners/easypaisa.png` | Easypaisa | Payout rail **and** checkout method |
+| `public/partners/stripe.png` | Stripe | Checkout only — see below |
 
-Shown on `/delivery` (COD section) and `/payouts`.
+`PartnerLogos` has two payment variants, kept apart deliberately:
+
+- **`payouts`** (JazzCash, Easypaisa) — how a *seller receives* money. Used on
+  `/payouts` and in the COD card on `/delivery`.
+- **`checkout`** (Stripe + the wallets) — how a *buyer pays*. Used on
+  `/how-it-works`.
+
+Stripe never appears beside the payout rails, because it is not one — showing it
+there would suggest sellers can be paid through it.
+
+> ⚠️ **Confirm Stripe actually applies before launch.** Stripe does not onboard
+> Pakistan-registered businesses, so unless card acceptance runs through a local
+> gateway or an overseas entity, this mark should come out. See
+> `CONTENT-TODO.md` item 27.
 
 ---
 

@@ -108,7 +108,7 @@ export function PayoutsContent() {
             <p className="mt-2 text-[15px] text-ink-500">
               JazzCash or Easypaisa, registered on your own CNIC. Usually the fastest option.
             </p>
-            <PartnerLogos variant="payments" className="mt-5 justify-start" />
+            <PartnerLogos variant="payouts" className="mt-5 justify-start" />
           </Card>
         </div>
       </Section>

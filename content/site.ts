@@ -1370,6 +1370,7 @@ export const howItWorks = {
   forResellers: { title: t('If you are reselling', 'اگر آپ ری سیلنگ کر رہے ہیں') },
   money: {
     title: t('How the money moves', 'رقم کیسے منتقل ہوتی ہے'),
+    checkoutLabel: t('How your customers can pay', 'آپ کے گاہک کیسے ادائیگی کر سکتے ہیں'),
     body: t(
       'A customer pays by cash on delivery or card. We receive the money, deduct commission, shipping where you chose to absorb it, and any reseller margin. What remains reaches your account on the settlement cycle. Every deduction appears as a separate line against the order number - there is no combined figure you cannot break down.',
       'گاہک کیش آن ڈیلیوری یا کارڈ سے ادائیگی کرتا ہے۔ ہم رقم وصول کر کے کمیشن، ڈیلیوری (اگر آپ نے برداشت کی ہو) اور ری سیلر منافع منہا کرتے ہیں۔ باقی رقم ادائیگی کے دورانیے پر آپ کے اکاؤنٹ میں پہنچتی ہے۔ ہر کٹوتی آرڈر نمبر کے ساتھ الگ لائن میں نظر آتی ہے۔',

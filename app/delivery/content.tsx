@@ -138,7 +138,7 @@ export function DeliveryContent() {
             </span>
             <h2 className="t-h3 mt-5">{t(delivery.cod.title)}</h2>
             <p className="mt-3 text-ink-500">{t(delivery.cod.body)}</p>
-            <PartnerLogos variant="payments" className="mt-6 justify-start" />
+            <PartnerLogos variant="payouts" className="mt-6 justify-start" />
           </Card>
 
           <Card id="rto" className="h-full" emphasis>

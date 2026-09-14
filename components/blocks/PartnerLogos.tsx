@@ -39,21 +39,28 @@ const COURIERS: Mark[] = [
   { name: 'Muller & Phipps', src: '/partners/mp.png', width: 313, height: 160, size: 'h-9 md:h-11' },
 ];
 
-const PAYMENT_RAILS: Mark[] = [
-  {
-    name: 'JazzCash',
-    src: '/partners/jazzcash.svg',
-    width: 200,
-    height: 56,
-    size: 'h-9 md:h-11',
-  },
+/**
+ * Two different things, deliberately kept apart.
+ *
+ * `payouts` is how a seller receives money from us. `checkout` is how a buyer
+ * pays in the first place. Stripe belongs only in the second: showing it beside
+ * the payout rails would suggest sellers can be paid through it, which is not
+ * what it does.
+ */
+const PAYOUT_RAILS: Mark[] = [
+  { name: 'JazzCash', src: '/partners/jazzcash.png', width: 204, height: 160, size: 'h-9 md:h-11' },
   {
     name: 'Easypaisa',
-    src: '/partners/easypaisa.svg',
-    width: 200,
-    height: 56,
-    size: 'h-9 md:h-11',
+    src: '/partners/easypaisa.png',
+    width: 574,
+    height: 160,
+    size: 'h-6 md:h-7',
   },
+];
+
+const CHECKOUT_METHODS: Mark[] = [
+  { name: 'Stripe', src: '/partners/stripe.png', width: 384, height: 160, size: 'h-7 md:h-8' },
+  ...PAYOUT_RAILS,
 ];
 
 export function PartnerLogos({
@@ -61,11 +68,12 @@ export function PartnerLogos({
   className,
   tone = 'light',
 }: {
-  variant?: 'couriers' | 'payments';
+  variant?: 'couriers' | 'payouts' | 'checkout';
   className?: string;
   tone?: 'light' | 'dark';
 }) {
-  const items = variant === 'couriers' ? COURIERS : PAYMENT_RAILS;
+  const items =
+    variant === 'couriers' ? COURIERS : variant === 'checkout' ? CHECKOUT_METHODS : PAYOUT_RAILS;
 
   return (
     <ul className={cn('flex flex-wrap items-center justify-center gap-x-8 gap-y-6', className)}>
