@@ -1,0 +1,83 @@
+# =============================================================================
+# AdeelSab - Apache configuration for Hostinger shared hosting.
+#
+# This is the source copy. `npm run publish` copies it to the root of the
+# `deploy` branch, so a Git deployment ships it automatically. If you upload the
+# site by hand instead, copy this file into public_html yourself.
+#
+# Edit it here, never on the server - a deploy overwrites the server copy.
+# =============================================================================
+
+# --- Custom error page -------------------------------------------------------
+# Next.js static export writes the 404 page to /404.html.
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # --- Force HTTPS -----------------------------------------------------------
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+  # --- Canonical host: non-www -> www ----------------------------------------
+  # CHOSEN: www is canonical. NEXT_PUBLIC_SITE_URL, the sitemap, the CORS origin
+  # in api/submit.php and this rule must all agree. To switch to non-www, invert
+  # this block and change all three of those to match.
+  RewriteCond %{HTTP_HOST} ^adeelsab\.com$ [NC]
+  RewriteRule ^(.*)$ https://www.adeelsab.com/$1 [R=301,L]
+</IfModule>
+
+# --- Caching -----------------------------------------------------------------
+<IfModule mod_headers.c>
+  # Hashed build assets are immutable: the filename changes when content does.
+  <FilesMatch "\.(js|css|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # HTML must revalidate, otherwise a deploy is invisible to returning visitors.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+
+  # Images and icons: long but not immutable, since these are replaced in place.
+  <FilesMatch "\.(png|jpg|jpeg|gif|svg|webp|ico)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+
+  # --- Security headers ------------------------------------------------------
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+  # The waitlist endpoint must never be cached.
+  <FilesMatch "submit\.php$">
+    Header set Cache-Control "no-store"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# --- Do not serve source, dot files, or the repository ------------------------
+# Hostinger's Git deploy clones into the web root, which puts .git inside
+# public_html. An exposed .git directory hands over the entire history, so it is
+# blocked as a path, not just as a filename.
+RedirectMatch 404 /\.git
+RedirectMatch 404 /\.env
+
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(md|json|lock|mjs|ts|tsx)$">
+  Require all denied
+</FilesMatch>
+
+# Directory listings off.
+Options -Indexes
