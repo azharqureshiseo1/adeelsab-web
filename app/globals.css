@@ -126,9 +126,23 @@ p {
 }
 
 /* Latin fragments inside Urdu copy (brand name, TCS, Rs.) keep the Latin face */
-.font-urdu .latin {
+.font-urdu .latin,
+.font-urdu [lang='en'],
+.font-urdu [lang='en'] h1,
+.font-urdu [lang='en'] h2,
+.font-urdu [lang='en'] h3,
+.font-urdu [lang='en'] h4 {
   font-family: var(--font-sans);
   line-height: 1.7;
+  letter-spacing: -0.01em;
+}
+
+/* Safety net: anything still in English while Urdu is active must not be set in
+   Nastaliq. Latin glyphs in a Nastaliq face are barely readable, and it is the
+   failure that makes a bilingual site look unfinished. */
+.font-urdu :where(input, select, textarea, code, pre, .tabular) {
+  font-family: var(--font-sans);
+  line-height: 1.6;
 }
 
 [dir='rtl'] .flip-rtl {

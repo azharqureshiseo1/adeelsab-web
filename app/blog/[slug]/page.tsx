@@ -4,6 +4,7 @@ import { DocArticle } from '@/components/blocks/DocArticle';
 import { getBlogPost } from '@/content/docs';
 import { blogMeta } from '@/content/doc-meta';
 import { breadcrumbJsonLd, pageMeta } from '@/lib/seo';
+import { blog } from '@/content/site';
 
 type Params = { slug: string };
 
@@ -21,8 +22,9 @@ export async function generateMetadata({
   if (!post) return {};
 
   return pageMeta({
-    title: post.title,
-    description: post.description,
+    // Search engines index the English; the Urdu is what the reader sees.
+    title: post.title.en,
+    description: post.description.en,
     path: `/blog/${slug}/`,
   });
 }
@@ -45,13 +47,13 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
             breadcrumbJsonLd([
               { name: 'Home', path: '/' },
               { name: 'Blog', path: '/blog/' },
-              { name: post.title, path: `/blog/${slug}/` },
+              { name: post.title.en, path: `/blog/${slug}/` },
             ]),
             {
               '@context': 'https://schema.org',
               '@type': 'Article',
-              headline: post.title,
-              description: post.description,
+              headline: post.title.en,
+              description: post.description.en,
               datePublished: post.updatedAt,
               dateModified: post.updatedAt,
               author: { '@type': 'Organization', name: 'AdeelSab' },
@@ -63,7 +65,7 @@ export default async function BlogPostPage({ params }: { params: Promise<Params>
       <DocArticle
         meta={meta}
         backHref="/blog"
-        backLabel="Blog"
+        backLabel={blog.eyebrow}
         urdu={ContentUr ? <ContentUr /> : undefined}
       >
         <Content />

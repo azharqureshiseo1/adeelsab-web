@@ -4,6 +4,7 @@ import { DocArticle } from '@/components/blocks/DocArticle';
 import { getSellerHubDoc } from '@/content/docs';
 import { sellerHubMeta } from '@/content/doc-meta';
 import { breadcrumbJsonLd, pageMeta } from '@/lib/seo';
+import { sellerHub } from '@/content/site';
 
 type Params = { slug: string };
 
@@ -22,8 +23,9 @@ export async function generateMetadata({
   if (!doc) return {};
 
   return pageMeta({
-    title: doc.title,
-    description: doc.description,
+    // Search engines index the English; the Urdu is what the reader sees.
+    title: doc.title.en,
+    description: doc.description.en,
     path: `/seller-hub/${slug}/`,
   });
 }
@@ -46,7 +48,7 @@ export default async function SellerHubDocPage({ params }: { params: Promise<Par
             breadcrumbJsonLd([
               { name: 'Home', path: '/' },
               { name: 'Seller Hub', path: '/seller-hub/' },
-              { name: doc.title, path: `/seller-hub/${slug}/` },
+              { name: doc.title.en, path: `/seller-hub/${slug}/` },
             ]),
           ),
         }}
@@ -54,7 +56,7 @@ export default async function SellerHubDocPage({ params }: { params: Promise<Par
       <DocArticle
         meta={meta}
         backHref="/seller-hub"
-        backLabel="Seller Hub"
+        backLabel={sellerHub.hero.eyebrow}
         urdu={ContentUr ? <ContentUr /> : undefined}
       >
         <Content />

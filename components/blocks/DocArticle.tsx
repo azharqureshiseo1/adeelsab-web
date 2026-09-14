@@ -10,6 +10,7 @@ import { ButtonLink } from '@/components/ui/Button';
 import { useLanguage } from '@/components/layout/LanguageProvider';
 import { common, sellerHub } from '@/content/site';
 import type { DocMeta } from '@/content/doc-meta';
+import type { Copy } from '@/lib/i18n';
 
 /**
  * Shared article shell for Seller Hub docs and blog posts.
@@ -32,7 +33,8 @@ export function DocArticle({
 }: {
   meta: DocMeta;
   backHref: string;
-  backLabel: string;
+  /** Bilingual, so the back link is not the one English word left on the page. */
+  backLabel: Copy;
   /** The English body. */
   children: ReactNode;
   /** The Urdu body, when a translation exists. */
@@ -53,14 +55,14 @@ export function DocArticle({
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink-500 hover:text-ink-900"
             >
               <ArrowLeft aria-hidden strokeWidth={1.75} className="h-4 w-4 rtl:rotate-180" />
-              {backLabel}
+              {t(backLabel)}
             </Link>
 
-            <h1 className="t-h1 mt-5 max-w-3xl">{meta.title}</h1>
-            <p className="mt-4 max-w-2xl text-lg text-ink-500">{meta.description}</p>
+            <h1 className="t-h1 mt-5 max-w-3xl">{t(meta.title)}</h1>
+            <p className="mt-4 max-w-2xl text-lg text-ink-500">{t(meta.description)}</p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3 text-sm text-ink-400">
-              <Badge tone="neutral">{meta.audience}</Badge>
+              <Badge tone="neutral">{t(meta.audience)}</Badge>
               <span className="inline-flex items-center gap-1.5">
                 <Clock aria-hidden strokeWidth={1.75} className="h-4 w-4" />
                 {meta.minutes} {t(common.minRead)}
@@ -118,7 +120,7 @@ export function DocArticle({
                       href={`#${item.id}`}
                       className="text-[15px] text-ink-500 transition-colors hover:text-brand-600"
                     >
-                      {item.label}
+                      {t(item.label)}
                     </a>
                   </li>
                 ))}

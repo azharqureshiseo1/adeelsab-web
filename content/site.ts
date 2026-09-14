@@ -1434,6 +1434,23 @@ export const sellerHub = {
   ),
 };
 
+export const blog = {
+  meta: {
+    title: 'Blog - AdeelSab',
+    description:
+      'Practical writing on selling online in Pakistan: getting started, reselling without capital, dropshipping economics and reducing returns.',
+  },
+  eyebrow: t('Blog', 'بلاگ'),
+  title: t(
+    'Writing about selling online in Pakistan',
+    'پاکستان میں آن لائن فروخت پر تحریریں',
+  ),
+  sub: t(
+    'Guides for people building a real business here, not a case study from somewhere else.',
+    'ان لوگوں کے لیے رہنمائی جو یہاں اصل کاروبار بنا رہے ہیں — کسی اور ملک کی مثال نہیں۔',
+  ),
+};
+
 /* -----------------------------------------------------------------------------
    13. About, careers, contact
 ----------------------------------------------------------------------------- */

@@ -66,28 +66,42 @@ The Seller Agreement in particular states commercial terms (commission, RTO, hol
 
 ---
 
-## Urdu translations outstanding
+## Urdu — ✅ complete
 
-Core interface copy, navigation, forms, errors and all page headings **are translated**. What remains is long-form article bodies.
+Every article now has a written Urdu body, and the surrounding page furniture
+(titles, descriptions, audience labels, table-of-contents entries, back links)
+is bilingual too. Nothing on the site falls back to English under the Urdu
+toggle any more.
 
-| Article | Status |
-|---|---|
-| `seller-hub/getting-started` | ✅ Urdu complete |
-| `seller-hub/product-photography-with-a-phone` | ✅ Urdu complete |
-| `seller-hub/reducing-rto-in-cod` | ✅ Urdu complete |
-| `seller-hub/how-to-list-products` | ❌ English only |
-| `seller-hub/packaging-guide` | ❌ English only |
-| `seller-hub/returns-and-disputes` | ❌ English only |
-| `seller-hub/ntn-and-tax-basics` | ❌ English only |
-| `blog/how-to-start-selling-online-in-pakistan` | ❌ English only |
-| `blog/reselling-without-capital` | ❌ English only |
-| `blog/dropshipping-in-pakistan` | ❌ English only |
+| Article | EN | UR |
+|---|---|---|
+| `seller-hub/getting-started` | ✅ | ✅ |
+| `seller-hub/how-to-list-products` | ✅ | ✅ |
+| `seller-hub/product-photography-with-a-phone` | ✅ | ✅ |
+| `seller-hub/packaging-guide` | ✅ | ✅ |
+| `seller-hub/returns-and-disputes` | ✅ | ✅ |
+| `seller-hub/reducing-rto-in-cod` | ✅ | ✅ |
+| `seller-hub/ntn-and-tax-basics` | ✅ | ✅ |
+| `blog/how-to-start-selling-online-in-pakistan` | ✅ | ✅ |
+| `blog/reselling-without-capital` | ✅ | ✅ |
+| `blog/dropshipping-in-pakistan` | ✅ | ✅ |
 
-Untranslated articles are **not silently served in English under an Urdu toggle** — the reader sees a notice in Urdu saying the translation is pending, then the English text.
+Both bodies ship in the HTML and one is hidden, so the Urdu is present for
+search engines as well as readers.
 
-To add one: create `<slug>.ur.mdx` alongside the English file, register it in `content/docs.ts`, and add `'ur'` to that article's `locales` array in `content/doc-meta.ts`.
+**Adding a new article:** write `<slug>.mdx` and `<slug>.ur.mdx`, register both
+in `content/docs.ts`, and add bilingual metadata to `content/doc-meta.ts`. If
+the Urdu body is not ready, omit `ContentUr` — the reader then sees a notice in
+Urdu saying the translation is pending, followed by the English text, rather
+than English served silently under an Urdu toggle.
 
-A handful of short `note` fields in the commission table are also empty in both languages — search `content/site.ts` for `t('', '')`.
+> **Worth a native read-through before launch.** The translations are faithful
+> and idiomatic, but a Pakistani reader checking tone and trade vocabulary —
+> especially the tax and returns pieces, where a wrong term misleads — is an
+> hour well spent.
+
+A handful of short `note` fields in the commission table are still empty in
+both languages — search `content/site.ts` for `t('', '')`.
 
 ---
 

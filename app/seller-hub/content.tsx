@@ -29,7 +29,7 @@ export function SellerHubContent() {
             <Reveal key={doc.slug} delay={index * 60}>
               <Card interactive className="flex h-full flex-col">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge tone="neutral">{doc.audience}</Badge>
+                  <Badge tone="neutral">{t(doc.audience)}</Badge>
                   {doc.locales.includes('ur') ? (
                     <Badge tone="active">
                       <span className="font-urdu">اردو</span>
@@ -39,10 +39,10 @@ export function SellerHubContent() {
 
                 <h2 className="t-h4 mt-4 font-bold">
                   <Link href={`/seller-hub/${doc.slug}`} className="hover:text-brand-600">
-                    {doc.title}
+                    {t(doc.title)}
                   </Link>
                 </h2>
-                <p className="mt-2 flex-1 text-[15px] text-ink-500">{doc.description}</p>
+                <p className="mt-2 flex-1 text-[15px] text-ink-500">{t(doc.description)}</p>
 
                 <div className="mt-5 flex items-center justify-between gap-3 text-sm">
                   <span className="inline-flex items-center gap-1.5 text-ink-400">
