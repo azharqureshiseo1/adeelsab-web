@@ -116,6 +116,24 @@ doing before launch — but not worth blocking on today.
 
 ---
 
+## If the build fails with `Invalid URL`
+
+```
+[Error: Failed to collect configuration for /_not-found]
+  [cause]: TypeError: Invalid URL
+```
+
+That is `NEXT_PUBLIC_SITE_URL`. Either it exists but is **empty**, or it is
+missing the protocol. Both are now repaired automatically — an empty value falls
+back, and a bare `www.adeelsab.com` gets `https://` prepended — so if you still
+see this, the deployment is running older code. Redeploy from `main`.
+
+You do not have to set `NEXT_PUBLIC_SITE_URL` on Vercel at all: the deployment
+URL is used when it is unset. Set it once the real domain is live, so canonical
+URLs and the sitemap name the domain rather than `*.vercel.app`.
+
+---
+
 ## 5. Domain and SSL
 
 Point `adeelsab.com` at the web app in hPanel and enable the free SSL

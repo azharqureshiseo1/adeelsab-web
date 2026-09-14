@@ -1,6 +1,48 @@
 import type { Metadata } from 'next';
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.adeelsab.com';
+const FALLBACK_SITE_URL = 'https://www.adeelsab.com';
+
+/**
+ * Resolves the canonical origin, tolerantly.
+ *
+ * Every URL on the site is built from this, so an unusable value fails the
+ * whole build with `TypeError: Invalid URL` on `/_not-found`, which says
+ * nothing about the cause. The two ways it goes wrong are both easy to do in a
+ * hosting panel:
+ *
+ *   - The variable exists but is **empty**. `??` does not catch that, because
+ *     an empty string is not nullish.
+ *   - The protocol is missing — `www.adeelsab.com` rather than `https://…`.
+ *
+ * Both are repaired here rather than thrown. On Vercel the deployment URL is
+ * used when nothing is set, so preview builds get correct absolute URLs without
+ * anything being configured.
+ */
+function resolveSiteUrl(): string {
+  const candidates = [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    // Vercel sets these itself. Server-side only, which is all metadata needs.
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    process.env.VERCEL_URL,
+  ];
+
+  for (const candidate of candidates) {
+    const value = candidate?.trim();
+    if (!value) continue;
+
+    const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+
+    try {
+      return new URL(withProtocol).origin;
+    } catch {
+      console.warn(`[seo] Ignoring unusable site URL: ${JSON.stringify(candidate)}`);
+    }
+  }
+
+  return FALLBACK_SITE_URL;
+}
+
+export const SITE_URL = resolveSiteUrl();
 export const SITE_NAME = 'AdeelSab';
 export const OG_IMAGE = '/og-image.png'; // 1200x630, built by scripts/generate-brand-assets.py
 
