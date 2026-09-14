@@ -8,7 +8,8 @@
     "build:static": "node scripts/build-static.mjs",
     "start": "node server.js",
     "lint": "next lint",
-    "publish": "npm run build:static && node scripts/publish-deploy-branch.mjs"
+    "publish": "npm run build:static && node scripts/publish-deploy-branch.mjs",
+    "test:leads": "node scripts/test-lead-delivery.mjs"
   },
   "dependencies": {
     "next": "15.5.4",

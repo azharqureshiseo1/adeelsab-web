@@ -74,16 +74,45 @@ is deliberate. A form that answers "thank you" and quietly bins the submission
 is worse than one that admits it failed — the merchant at least still reaches
 you on WhatsApp, and the lead is written to the application log either way.
 
-The quickest setup:
+### Setting up Resend
 
-1. Sign up at [resend.com](https://resend.com) — the free tier is generous.
-2. Create an API key.
-3. Add `RESEND_API_KEY` and `LEAD_NOTIFY_EMAIL` in the panel.
-4. Redeploy, submit the form once, confirm the email arrives.
+1. Sign up at [resend.com](https://resend.com). The free tier covers far more
+   than a pre-launch waitlist will produce.
+2. **API Keys → Create API Key.** Sending permission is enough. Copy it — it is
+   shown once, and it starts `re_`.
+3. In hPanel, add two environment variables to the web app:
 
-To send from your own domain rather than Resend's sandbox address, verify the
-domain in Resend and set `LEAD_FROM_EMAIL` (for example
-`AdeelSab <leads@adeelsab.com>`).
+   ```
+   RESEND_API_KEY     re_xxxxxxxxxxxxxxxx
+   LEAD_NOTIFY_EMAIL  the address that should receive leads
+   ```
+
+4. Redeploy.
+5. Check it, without filling in the form:
+
+   ```bash
+   npm run test:leads
+   ```
+
+   Run it from the panel's terminal so it sees the real environment. It sends
+   one test email and prints exactly what Resend said.
+
+### Two things that catch people out
+
+**A new Resend account can only email the address you signed up with.** Until
+you verify a domain, set `LEAD_NOTIFY_EMAIL` to that same address or the send is
+rejected. `npm run test:leads` names this specifically when it happens.
+
+**Sending from your own domain needs the domain verified in Resend** (a few DNS
+records). Until then leave `LEAD_FROM_EMAIL` unset — the default sender,
+`onboarding@resend.dev`, works immediately. Once verified, set it:
+
+```
+LEAD_FROM_EMAIL   AdeelSab <leads@adeelsab.com>
+```
+
+Emails from your own domain are far less likely to land in spam, so it is worth
+doing before launch — but not worth blocking on today.
 
 ---
 
