@@ -9,3 +9,6 @@ build/
 next-env.d.ts
 .vercel
 storage/
+
+# Deployment bundles built from out/ - artifacts, never source
+*.zip
