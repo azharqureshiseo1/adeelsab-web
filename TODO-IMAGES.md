@@ -1,37 +1,43 @@
 # Image TODO — every shot needed
 
-Every image on the site is currently a placeholder. They are SVG stand-ins that render cleanly and are labelled as placeholders, so nothing appears broken — but none of them should survive to launch.
+The brand artwork is real and in place. Everything else — photography, courier marks and regulator emblems — is still a labelled placeholder that renders cleanly, so nothing appears broken, but none of it should survive to launch.
 
 **Rule: never ship generic Western stock photography.** The audience is a shop owner in Faisalabad. A stock photo of a smiling model in an American warehouse is worse than no photograph at all, because it signals that the site was assembled rather than built. Real merchants, real packaging, real riders, real streets.
 
 ---
 
-## 1. Brand artwork — do this first
+## 1. Brand artwork — ✅ done
 
-Two logo files were supplied but are not in the repository. The site currently uses **authored SVG stand-ins** that match the brand colours and the 2.99:1 aspect ratio but **do not reproduce the real wordmark**.
+The supplied artwork is in place and wired up:
 
-| File to add | Source | Used for |
+| File | Role |
+|---|---|
+| `public/brand/adeelsab-logo-dark.png` | 2170×725 RGBA — header and light sections |
+| `public/brand/adeelsab-logo-orange.png` | 2170×725 RGBA — footer and dark bands |
+| `public/brand/mark.png` | The square "A" bag mark — source for every icon |
+
+Generated from `mark.png` and the orange wordmark by `scripts/generate-brand-assets.py`:
+
+`favicon.ico` (16/32/48/64) · `icon-192.png` · `icon-512.png` · `apple-touch-icon.png` (180) · `og-image.png` (1200×630)
+
+**If the brand artwork ever changes**, replace the files in `public/brand/` and re-run:
+
+```bash
+python scripts/generate-brand-assets.py
+```
+
+---
+
+## 1b. Regulator marks — placeholders
+
+| File | Needed | Currently |
 |---|---|---|
-| `public/brand/adeelsab-logo-dark.png` | The black wordmark + orange "Sab" version | Default. Header, light sections |
-| `public/brand/adeelsab-logo-orange.png` | The all-orange version | Footer, dark CTA bands |
+| `public/trust/secp.svg` | Official SECP emblem | Neutral shield placeholder reading "SECP" |
+| `public/trust/fbr.svg` | Official FBR emblem | Neutral shield placeholder reading "FBR" |
 
-Both are 2170 × 725 px, RGBA with transparency.
+> ⚠️ **Check before using the official emblems.** Regulator logos are not free-use marks. Confirm that SECP and FBR permit display by a registered company before swapping the placeholders in — the registration *number* itself carries most of the trust and is not restricted.
 
-**To swap them in:** drop the two PNGs into `public/brand/`, then change the two paths in the `SOURCES` map at the top of [`components/Logo.tsx`](./components/Logo.tsx) from `.svg` to `.png`. Nothing else needs touching — the aspect ratio is already identical, so no layout shifts.
-
-### Also generate from the dark logo
-
-| File | Spec | Currently |
-|---|---|---|
-| `public/favicon.ico` | 32×32, **crop to the "A" bag mark only**, not the wordmark | `icon.svg` stand-in |
-| `public/icon-192.png` | 192×192, square, orange mark on white | `icon.svg` stand-in |
-| `public/icon-512.png` | 512×512, square, orange mark on white | `icon.svg` stand-in |
-| `public/apple-touch-icon.png` | 180×180 | `apple-touch-icon.svg` stand-in |
-| `public/og-image.png` | 1200×630, `#101820` background + orange logo + tagline | `og-image.svg` stand-in |
-
-> The OG image matters: **several social platforms do not render SVG previews**, so links shared on Facebook and WhatsApp will currently show no image. Replace `og-image.svg` with a real PNG and update `OG_IMAGE` in [`lib/seo.ts`](./lib/seo.ts).
-
-After adding the PNGs, update the `icons` block in [`app/layout.tsx`](./app/layout.tsx).
+The FBR mark is hidden until an NTN is entered — see `CONTENT-TODO.md`.
 
 ---
 

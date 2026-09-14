@@ -78,7 +78,7 @@ components/
   ui/                   Button, Card, Badge, Input, Accordion, Table, Tabs
   blocks/               Page sections — Hero, ThreePaths, CapabilityBand,
                         CoverageMap, RateCard, WaitlistForm, CTABand, …
-  Logo.tsx              Variant-switching logo
+  Logo.tsx              Variant-switching logo (dark / orange PNG)
 content/
   site.ts               ALL user-facing copy, EN + UR. Single source of truth.
   doc-meta.ts           Article metadata (kept apart so index pages stay light)
@@ -86,7 +86,9 @@ content/
   seller-hub/*.mdx      Seven guides
   blog/*.mdx            Three posts
 lib/                    i18n, seo, analytics, utils
+public/brand/           Supplied logo artwork; source for every icon
 public/api/submit.php   The waitlist endpoint
+scripts/                Brand asset generation (favicon, app icons, OG image)
 deploy/.htaccess        Uploaded to the server by hand, once
 ```
 
@@ -144,7 +146,7 @@ Copy `.env.example` to `.env.local`. All are optional in development.
 ## Before launch
 
 - [ ] [CONTENT-TODO.md](./CONTENT-TODO.md) — every placeholder figure, with the blocking ones marked
-- [ ] [TODO-IMAGES.md](./TODO-IMAGES.md) — the real logo PNGs, partner marks and photography
+- [ ] [TODO-IMAGES.md](./TODO-IMAGES.md) — partner marks, regulator emblems and photography (brand artwork is done)
 - [ ] Legal review of the three documents in `app/legal/`
 - [ ] [DEPLOY.md](./DEPLOY.md) step 7 — in particular, confirm `leads.csv` is **not** downloadable
 

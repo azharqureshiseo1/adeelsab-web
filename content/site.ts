@@ -49,7 +49,6 @@ export const config = {
     whatsappPrefill: 'Assalam-o-alaikum, I want to sell on AdeelSab.',
     supportEmail: 'support@adeelsab.com', // TODO: confirm
     businessEmail: 'business@adeelsab.com', // TODO: confirm
-    phone: '+92 300 0000000', // TODO: confirm
     addressLines: [
       'TODO: office address line 1',
       'TODO: office address line 2',
@@ -59,17 +58,27 @@ export const config = {
   },
 
   legal: {
-    secp: 'TODO: SECP registration number',
-    ntn: 'TODO: NTN',
-    entity: 'TODO: registered legal entity name',
+    /** Incorporation number issued by the SECP. */
+    secp: '0353167',
+    entity: 'AdeelSab (Private) Limited',
+    /** Displayed in uppercase where the registered name is quoted formally. */
+    entityFormal: 'ADEELSAB (PRIVATE) LIMITED',
+    /** TODO: NTN not yet issued/confirmed. Not rendered while empty. */
+    ntn: '',
   },
 
-  /** TODO: confirm social handles. Empty entries are not rendered. */
+  /** Empty entries are not rendered, so a missing handle never links nowhere. */
   social: {
-    facebook: '',
-    instagram: '',
-    linkedin: '',
-    youtube: '',
+    facebook: 'https://www.facebook.com/adeelsab.pk',
+    instagram: 'https://www.instagram.com/adeelsab.pk',
+    tiktok: 'https://www.tiktok.com/@adeelsab.pk',
+    threads: 'https://www.threads.com/@adeelsab.pk',
+  },
+
+  /** The agency credited in the footer. */
+  developer: {
+    name: 'Refine Core Private Limited',
+    url: 'https://refinecore.pk',
   },
 
   /** TODO: confirm whether a mobile app exists at launch. Gates footer + CTA blocks. */

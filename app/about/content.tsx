@@ -6,6 +6,7 @@ import { Section, SectionHeading } from '@/components/layout/Section';
 import { Card } from '@/components/ui/Card';
 import { TodoBadge } from '@/components/ui/Badge';
 import { CTABand } from '@/components/blocks/CTABand';
+import { RegistrationMarks } from '@/components/blocks/RegistrationMarks';
 import { Reveal } from '@/components/blocks/Reveal';
 import { useT } from '@/components/layout/LanguageProvider';
 import { about, aboutBuilt, config } from '@/content/site';
@@ -82,22 +83,28 @@ export function AboutContent() {
               <dl className="mt-3 space-y-2 text-[15px]">
                 <div className="flex flex-wrap gap-x-2">
                   <dt className="text-ink-400">Entity:</dt>
-                  <dd>{config.legal.entity}</dd>
+                  <dd className="font-medium text-ink-900">{config.legal.entityFormal}</dd>
                 </div>
                 <div className="flex flex-wrap gap-x-2">
-                  <dt className="text-ink-400">SECP:</dt>
-                  <dd>{config.legal.secp}</dd>
+                  <dt className="text-ink-400">SECP registration:</dt>
+                  <dd className="tabular">{config.legal.secp}</dd>
                 </div>
-                <div className="flex flex-wrap gap-x-2">
-                  <dt className="text-ink-400">NTN:</dt>
-                  <dd>{config.legal.ntn}</dd>
-                </div>
+                {config.legal.ntn ? (
+                  <div className="flex flex-wrap gap-x-2">
+                    <dt className="text-ink-400">NTN:</dt>
+                    <dd className="tabular">{config.legal.ntn}</dd>
+                  </div>
+                ) : null}
                 <div className="flex flex-wrap gap-x-2">
                   <dt className="text-ink-400">Office:</dt>
-                  <dd>{config.contact.addressLines.join(', ')}</dd>
+                  <dd>
+                    {config.contact.addressLines.join(', ')}
+                    <TodoBadge>TODO: confirm address</TodoBadge>
+                  </dd>
                 </div>
               </dl>
-              <TodoBadge>TODO: confirm all registration details</TodoBadge>
+
+              <RegistrationMarks tone="light" className="mt-5" />
             </div>
           </div>
         </div>

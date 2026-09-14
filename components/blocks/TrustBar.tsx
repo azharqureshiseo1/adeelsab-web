@@ -5,6 +5,7 @@ import { Building2, FileCheck2, MapPin, MessageCircle } from 'lucide-react';
 import { Section, SectionHeading } from '@/components/layout/Section';
 import { Card } from '@/components/ui/Card';
 import { TodoBadge } from '@/components/ui/Badge';
+import { RegistrationMarks } from './RegistrationMarks';
 import { useT } from '@/components/layout/LanguageProvider';
 import { config, home, waUrl } from '@/content/site';
 
@@ -29,20 +30,24 @@ export function TrustBar() {
               <FileCheck2 aria-hidden strokeWidth={1.75} className="mt-0.5 h-5 w-5 shrink-0 text-brand-500" />
               <div>
                 <h3 className="font-semibold text-ink-900">Registered company</h3>
-                <p className="mt-1 text-[15px] text-ink-500">
-                  {config.legal.entity}
-                  <TodoBadge />
-                </p>
+                <p className="mt-1 text-[15px] text-ink-500">{config.legal.entityFormal}</p>
               </div>
             </li>
 
             <li className="flex gap-3">
               <Building2 aria-hidden strokeWidth={1.75} className="mt-0.5 h-5 w-5 shrink-0 text-brand-500" />
               <div>
-                <h3 className="font-semibold text-ink-900">SECP &amp; NTN</h3>
+                <h3 className="font-semibold text-ink-900">
+                  SECP{config.legal.ntn ? ' & NTN' : ' registration'}
+                </h3>
                 <p className="mt-1 text-[15px] text-ink-500">
-                  {config.legal.secp} · {config.legal.ntn}
-                  <TodoBadge />
+                  <span className="tabular">{config.legal.secp}</span>
+                  {config.legal.ntn ? (
+                    <>
+                      {' · '}
+                      <span className="tabular">{config.legal.ntn}</span>
+                    </>
+                  ) : null}
                 </p>
               </div>
             </li>
@@ -76,6 +81,10 @@ export function TrustBar() {
               </div>
             </li>
           </ul>
+
+          <div className="mt-6 border-t border-ink-200 pt-6">
+            <RegistrationMarks tone="light" />
+          </div>
         </Card>
 
         <Card tone="white" className="flex flex-col items-start">

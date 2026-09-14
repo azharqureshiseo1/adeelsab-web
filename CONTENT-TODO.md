@@ -18,13 +18,17 @@ These are the figures Pakistani merchants judge a platform on. A vague answer to
 | 4 | **Payout timeline** | `content/site.ts` → `config.payout.days` | `7` days |
 | 5 | **Minimum payout threshold** | `content/site.ts` → `config.payout.minimumPkr` | `Rs. 1,000` |
 | 6 | **COD remittance schedule** | `content/site.ts` → `delivery.cod` | Follows the payout cycle |
-| 7 | **SECP registration number** | `content/site.ts` → `config.legal.secp` | `TODO:` string |
-| 8 | **NTN** | `content/site.ts` → `config.legal.ntn` | `TODO:` string |
-| 9 | **Registered legal entity name** | `content/site.ts` → `config.legal.entity` | `TODO:` string |
+| 7 | ~~SECP registration number~~ | `content/site.ts` → `config.legal.secp` | ✅ **0353167** |
+| 8 | **NTN** | `content/site.ts` → `config.legal.ntn` | Empty. **The FBR mark and the NTN line stay hidden until this is filled in** — see below |
+| 9 | ~~Registered legal entity name~~ | `content/site.ts` → `config.legal.entity` | ✅ **AdeelSab (Private) Limited** |
 | 10 | **Physical office address** | `content/site.ts` → `config.contact.addressLines` | Three `TODO:` lines |
 | 11 | **WhatsApp support number** | `content/site.ts` → `config.contact.whatsapp` | `923000000000` |
 
-> ⚠️ Item 11 appears on **every page** via the floating WhatsApp button. Until it is real, that button opens a chat with a non-existent number.
+> ⚠️ Item 11 appears on **every page** via the floating WhatsApp button. Until it is real, that button opens a chat with a non-existent number. It is now the only contact number on the site — the placeholder landline was removed.
+
+### Why the FBR mark is not showing yet
+
+`RegistrationMarks` renders the FBR badge **only when `config.legal.ntn` is non-empty**. Showing a tax authority's emblem without a number behind it implies a registration a merchant can check and fail to verify, which costs more trust than the missing badge does. Put the NTN into `config.legal.ntn` and the FBR mark, the footer NTN line and the About-page NTN row all appear automatically — no code change.
 
 ---
 
@@ -38,10 +42,9 @@ These are the figures Pakistani merchants judge a platform on. A vague answer to
 | 15 | Commission holiday length | `config.foundingSeller.commissionHolidayMonths` | `3` months |
 | 16 | Registered merchant count | `config.foundingSeller.registered` | `0` — **hand-updated, never a live counter** |
 | 17 | Support & business email addresses | `config.contact.supportEmail`, `businessEmail` | `support@` / `business@adeelsab.com` |
-| 18 | Support phone number | `config.contact.phone` | `+92 300 0000000` |
 | 19 | Office hours | `config.contact.hours` | Mon–Sat, 10:00–19:00 PKT |
 | 20 | Founder name, photo and one-line bio | `TrustBar.tsx`, `app/about/content.tsx` | `TODO: founder name` |
-| 21 | Social media handles | `config.social` | All empty — **empty entries are not rendered**, so the footer simply omits them |
+| 21 | ~~Social media handles~~ | `config.social` | ✅ Facebook, Instagram, TikTok, Threads (`adeelsab.pk`) |
 | 22 | Delivery timelines | `content/site.ts` → `deliveryTimelines` | Placeholder, needs checking against courier SLAs |
 | 23 | Open roles | `content/site.ts` → `openRoles` | Three plausible roles — confirm or empty the array |
 | 24 | Mobile app at launch? | `config.mobileAppAtLaunch` | `false`. If true, footer and CTAs need app-store links |

@@ -1,6 +1,6 @@
 'use client';
 
-import { Briefcase, Clock, Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { Briefcase, Clock, Mail, MapPin, MessageCircle } from 'lucide-react';
 import { PageHero } from '@/components/blocks/Hero';
 import { Section } from '@/components/layout/Section';
 import { Card } from '@/components/ui/Card';
@@ -59,17 +59,8 @@ export function ContactContent() {
                   {config.contact.supportEmail}
                 </a>
               </li>
-              <li className="flex items-center gap-2.5">
-                <Phone aria-hidden strokeWidth={1.75} className="h-4 w-4 text-brand-500" />
-                <a
-                  href={`tel:${config.contact.phone.replace(/\s/g, '')}`}
-                  className="hover:text-ink-900"
-                >
-                  {config.contact.phone}
-                </a>
-              </li>
             </ul>
-            {/* TODO: confirm the WhatsApp number, support email and phone line. */}
+            {/* TODO: confirm the WhatsApp number and support email. */}
             <TodoBadge>TODO: confirm contact details</TodoBadge>
           </Card>
 
