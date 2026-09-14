@@ -167,8 +167,16 @@ export function WaitlistForm({
         </div>
       ) : null}
 
-      {/* Honeypot: hidden from people, irresistible to bots. */}
-      <div aria-hidden className="absolute h-px w-px overflow-hidden opacity-0" style={{ left: '-9999px' }}>
+      {/* Honeypot: hidden from people, irresistible to bots.
+          Clipped rather than pushed off-screen with a negative offset — a
+          negative offset extends the page in RTL and produces a horizontal
+          scrollbar on every Urdu page. `display: none` is avoided because
+          bots skip fields that are not rendered. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute h-px w-px overflow-hidden opacity-0"
+        style={{ clipPath: 'inset(50%)' }}
+      >
         <label htmlFor="website-field">Website</label>
         <input
           id="website-field"

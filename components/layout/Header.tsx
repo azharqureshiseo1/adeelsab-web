@@ -105,9 +105,15 @@ export function Header() {
             <div className="hidden sm:block">
               <LangToggle />
             </div>
-            <ButtonLink href="/founding-seller" size="sm" className="hidden md:inline-flex">
-              {t(common.becomeFoundingSeller)}
-            </ButtonLink>
+            {/* Wrapped rather than given `hidden md:inline-flex` directly: the
+                button's own `inline-flex` and the `hidden` utility both set
+                `display`, and which one wins depends on stylesheet order rather
+                than class order — so the button stayed visible on mobile. */}
+            <div className="hidden md:block">
+              <ButtonLink href="/founding-seller" size="sm">
+                {t(common.becomeFoundingSeller)}
+              </ButtonLink>
+            </div>
             <MobileNav />
           </div>
         </div>

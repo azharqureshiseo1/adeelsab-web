@@ -1,0 +1,54 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# One deploy at a time. A second push while the first is uploading would
+# interleave two FTP sessions writing the same directory.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build static export
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://www.adeelsab.com' }}
+          NEXT_PUBLIC_GA_ID: ${{ vars.GA_ID }}
+
+      # `npm run build` triggers postbuild, which copies public/api into out/.
+      # This check fails the deploy loudly rather than shipping a site whose
+      # waitlist form posts to a 404.
+      - name: Verify the PHP endpoint shipped
+        run: test -f out/api/submit.php
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./out/
+          server-dir: /public_html/
+          # .htaccess is maintained on the server, not in out/, so it is never
+          # removed by a deploy. Leads and rate-limit files live outside
+          # public_html and are untouched.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**

@@ -16,9 +16,9 @@
   <!-- Swoosh + cursor -->
   <path d="M118 452 q140 96 268 -6" fill="none" stroke="#FB5301" stroke-width="34" stroke-linecap="round"/>
   <path d="M344 372 l84 28 -52 26 -10 46 Z" fill="#FB5301" stroke="#FFFFFF" stroke-width="12" stroke-linejoin="round"/>
-  <!-- Wordmark. TODO-IMAGES: replace with the supplied 2170x725 PNG artwork. -->
-  <g font-family="Inter, 'Segoe UI', Arial, sans-serif" font-weight="800" font-size="420" letter-spacing="-14">
-    <text x="560" y="530" fill="#101820">Adeel</text>
-    <text x="1430" y="530" fill="#FB5301">Sab</text>
-  </g>
+  <!-- Wordmark. TODO-IMAGES: replace with the supplied 2170x725 PNG artwork.
+       One text run with a tspan, so the glyphs flow rather than being
+       positioned by hand and colliding. -->
+  <text x="560" y="505" font-family="Inter, 'Segoe UI', Arial, sans-serif"
+        font-weight="800" font-size="330" letter-spacing="-8" fill="#101820">Adeel<tspan fill="#FB5301">Sab</tspan></text>
 </svg>
