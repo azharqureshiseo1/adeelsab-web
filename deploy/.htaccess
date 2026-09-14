@@ -1,9 +1,11 @@
 # =============================================================================
 # AdeelSab - Apache configuration for Hostinger shared hosting.
 #
-# This file is NOT part of the build output. Upload it once, by hand, into
-# public_html. Keeping it out of out/ means a deploy can never overwrite or
-# delete it. See DEPLOY.md step 5.
+# This is the source copy. `npm run publish` copies it to the root of the
+# `deploy` branch, so a Git deployment ships it automatically. If you upload the
+# site by hand instead, copy this file into public_html yourself.
+#
+# Edit it here, never on the server - a deploy overwrites the server copy.
 # =============================================================================
 
 # --- Custom error page -------------------------------------------------------
@@ -62,7 +64,13 @@ ErrorDocument 404 /404.html
   AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
-# --- Do not serve source or dot files ----------------------------------------
+# --- Do not serve source, dot files, or the repository ------------------------
+# Hostinger's Git deploy clones into the web root, which puts .git inside
+# public_html. An exposed .git directory hands over the entire history, so it is
+# blocked as a path, not just as a filename.
+RedirectMatch 404 /\.git
+RedirectMatch 404 /\.env
+
 <FilesMatch "^\.">
   Require all denied
 </FilesMatch>

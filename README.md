@@ -156,4 +156,17 @@ Copy `.env.example` to `.env.local`. All are optional in development.
 
 ## Deployment
 
-Push to `main`; the GitHub Action builds and uploads `out/` to Hostinger over FTP. Full instructions, including the storage directory that must sit outside `public_html`, are in [DEPLOY.md](./DEPLOY.md).
+Three routes, all landing the same static site in `public_html` — pick one in [DEPLOY.md](./DEPLOY.md):
+
+| Route | Update with |
+|---|---|
+| **Hostinger Git deploy** | `npm run publish` — pushes the built site to the `deploy` branch, which Hostinger clones |
+| **GitHub Actions over FTP** | `git push origin main` |
+| **Manual zip upload** | Re-upload `out/` |
+
+`main` holds source and is **not** servable on its own. Hostinger's shared hosting
+clones a branch straight into the web root without building, which is why the
+`deploy` branch exists: it is the finished site, `index.html` at its root.
+
+The storage directory for leads must sit **outside** `public_html` — see
+[DEPLOY.md](./DEPLOY.md), and verify it after the first deploy.

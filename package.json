@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "node scripts/copy-api.mjs"
+    "postbuild": "node scripts/copy-api.mjs",
+    "publish": "npm run build && node scripts/publish-deploy-branch.mjs"
   },
   "dependencies": {
     "next": "15.5.4",
