@@ -5,16 +5,25 @@ import { config } from '@/content/site';
 import { cn } from '@/lib/utils';
 
 /**
- * Regulator marks shown as a trust signal alongside the registration details.
+ * Official regulator marks, shown as a trust signal beside the registration
+ * details. A merchant has no way to judge AdeelSab itself, but recognises these
+ * immediately — which is also why the registration number sits next to each one
+ * rather than the logo standing alone.
  *
- * The FBR mark is rendered only when an NTN is actually on file. Showing a tax
- * authority's emblem without a number behind it implies a registration the
- * company may not hold, which is exactly the kind of claim a merchant can check
- * — so it appears automatically the moment `config.legal.ntn` is filled in.
- *
- * TODO-IMAGES: both files are placeholder marks. Replace with official artwork
- * once permission to display each emblem is confirmed.
+ * Both marks are dark artwork on transparency, so each sits on a white tile to
+ * stay legible on the dark footer. Their aspect ratios differ sharply (SECP is
+ * a tall crest, FBR a wide lockup), so height is fixed and width is left free.
  */
+type Mark = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+  label: string;
+  /** Omitted entirely rather than shown as a placeholder when not yet on file. */
+  value?: string;
+};
+
 export function RegistrationMarks({
   tone = 'dark',
   className,
@@ -22,44 +31,54 @@ export function RegistrationMarks({
   tone?: 'dark' | 'light';
   className?: string;
 }) {
-  const hasNtn = config.legal.ntn.trim().length > 0;
+  const marks: Mark[] = [];
 
-  const marks = [
-    {
-      src: '/trust/secp.svg',
-      alt: 'Registered with the Securities and Exchange Commission of Pakistan',
+  if (config.legal.secp.trim()) {
+    marks.push({
+      src: '/trust/secp.png',
+      width: 144,
+      height: 160,
+      alt: 'Securities and Exchange Commission of Pakistan',
       label: 'SECP Registered',
       value: config.legal.secp,
-      show: config.legal.secp.trim().length > 0,
-    },
-    {
-      src: '/trust/fbr.svg',
-      alt: 'Registered with the Federal Board of Revenue',
-      label: 'FBR Registered',
-      value: config.legal.ntn,
-      show: hasNtn,
-    },
-  ].filter((mark) => mark.show);
+    });
+  }
+
+  marks.push({
+    src: '/trust/fbr.png',
+    width: 432,
+    height: 160,
+    alt: 'Federal Board of Revenue, Government of Pakistan',
+    label: 'FBR Registered',
+    // TODO: NTN. The label stands alone until the number is supplied — better
+    // an absent number than an invented one a merchant could check and fail.
+    value: config.legal.ntn.trim() || undefined,
+  });
 
   if (marks.length === 0) return null;
 
   return (
-    <ul className={cn('flex flex-wrap gap-3', className)}>
+    <ul className={cn('flex flex-wrap items-stretch gap-3', className)}>
       {marks.map((mark) => (
         <li
           key={mark.label}
           className={cn(
-            'flex items-center gap-3 rounded-xl border px-3.5 py-2.5',
+            'flex items-center gap-3 rounded-xl border px-3 py-2.5',
             tone === 'dark' ? 'border-ink-700 bg-ink-800' : 'border-ink-200 bg-white',
           )}
         >
-          <Image
-            src={mark.src}
-            alt={mark.alt}
-            width={120}
-            height={120}
-            className="h-9 w-9 shrink-0 rounded"
-          />
+          {/* White tile: both emblems are dark artwork and would disappear
+              against the ink footer. */}
+          <span className="flex h-12 shrink-0 items-center justify-center rounded-lg bg-white px-2.5">
+            <Image
+              src={mark.src}
+              alt={mark.alt}
+              width={mark.width}
+              height={mark.height}
+              className="h-9 w-auto object-contain"
+            />
+          </span>
+
           <div className="leading-tight">
             <p
               className={cn(
@@ -69,9 +88,13 @@ export function RegistrationMarks({
             >
               {mark.label}
             </p>
-            <p className={cn('tabular text-xs', tone === 'dark' ? 'text-ink-400' : 'text-ink-500')}>
-              {mark.value}
-            </p>
+            {mark.value ? (
+              <p
+                className={cn('tabular text-xs', tone === 'dark' ? 'text-ink-400' : 'text-ink-500')}
+              >
+                {mark.value}
+              </p>
+            ) : null}
           </div>
         </li>
       ))}

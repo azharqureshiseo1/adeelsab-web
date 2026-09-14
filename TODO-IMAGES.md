@@ -28,16 +28,22 @@ python scripts/generate-brand-assets.py
 
 ---
 
-## 1b. Regulator marks — placeholders
+## 1b. Regulator marks — ✅ official artwork in place
 
-| File | Needed | Currently |
-|---|---|---|
-| `public/trust/secp.svg` | Official SECP emblem | Neutral shield placeholder reading "SECP" |
-| `public/trust/fbr.svg` | Official FBR emblem | Neutral shield placeholder reading "FBR" |
+| File | Source |
+|---|---|
+| `public/trust/secp.png` | Official SECP crest, trimmed and resized to 160px tall |
+| `public/trust/fbr.png` | Official FBR lockup, trimmed and resized to 160px tall |
 
-> ⚠️ **Check before using the official emblems.** Regulator logos are not free-use marks. Confirm that SECP and FBR permit display by a registered company before swapping the placeholders in — the registration *number* itself carries most of the trust and is not restricted.
+Both are transparent PNGs rendered on a white tile, since the artwork is dark
+and sits on the ink-900 footer. They appear in the footer, the home-page trust
+section and on `/about`.
 
-The FBR mark is hidden until an NTN is entered — see `CONTENT-TODO.md`.
+> ⚠️ **Worth a sanity check with a lawyer or the regulators.** SECP and FBR
+> emblems are government marks, not free-use logos. Displaying them as a
+> registered entity is common practice in Pakistan, but confirm it is
+> acceptable — the registration *number* alone carries most of the trust and
+> carries no such question.
 
 ---
 

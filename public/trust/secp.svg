@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="SECP">
-  <title>Securities and Exchange Commission of Pakistan</title>
-  <!-- TODO-IMAGES: placeholder mark. Replace with the official SECP emblem
-       once permission to display it is confirmed. -->
-  <path d="M60 8 L104 24 v34c0 27-18 45-44 54C34 103 16 85 16 58V24Z" fill="#F1F4F7" stroke="#2B3542" stroke-width="4" stroke-linejoin="round"/>
-  <text x="60" y="60" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="24" fill="#2B3542" letter-spacing="0.5">SECP</text>
-  <text x="60" y="80" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="600" font-size="11" fill="#7C8797">PAKISTAN</text>
-</svg>

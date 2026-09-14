@@ -44,8 +44,13 @@ export const config = {
   },
 
   contact: {
-    /** TODO: real WhatsApp support number, digits only, country code first. */
-    whatsapp: '923000000000',
+    /**
+     * TODO: replace with the real WhatsApp support number before launch.
+     * Digits only, country code first (923XXXXXXXXX). This is a demo value and
+     * the button on every page currently opens a chat with a number that is
+     * not ours.
+     */
+    whatsapp: '923001234567',
     whatsappPrefill: 'Assalam-o-alaikum, I want to sell on AdeelSab.',
     supportEmail: 'support@adeelsab.com', // TODO: confirm
     businessEmail: 'business@adeelsab.com', // TODO: confirm

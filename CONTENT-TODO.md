@@ -22,13 +22,13 @@ These are the figures Pakistani merchants judge a platform on. A vague answer to
 | 8 | **NTN** | `content/site.ts` → `config.legal.ntn` | Empty. **The FBR mark and the NTN line stay hidden until this is filled in** — see below |
 | 9 | ~~Registered legal entity name~~ | `content/site.ts` → `config.legal.entity` | ✅ **AdeelSab (Private) Limited** |
 | 10 | **Physical office address** | `content/site.ts` → `config.contact.addressLines` | Three `TODO:` lines |
-| 11 | **WhatsApp support number** | `content/site.ts` → `config.contact.whatsapp` | `923000000000` |
+| 11 | **WhatsApp support number** | `content/site.ts` → `config.contact.whatsapp` | `923001234567` — **demo number, not ours** |
 
 > ⚠️ Item 11 appears on **every page** via the floating WhatsApp button. Until it is real, that button opens a chat with a non-existent number. It is now the only contact number on the site — the placeholder landline was removed.
 
-### Why the FBR mark is not showing yet
+### The FBR mark has no number under it yet
 
-`RegistrationMarks` renders the FBR badge **only when `config.legal.ntn` is non-empty**. Showing a tax authority's emblem without a number behind it implies a registration a merchant can check and fail to verify, which costs more trust than the missing badge does. Put the NTN into `config.legal.ntn` and the FBR mark, the footer NTN line and the About-page NTN row all appear automatically — no code change.
+The official SECP and FBR emblems are both displayed. The SECP badge carries its registration number; the FBR badge shows the label alone, because no NTN has been supplied. Fill `config.legal.ntn` and the number appears under the FBR mark, in the footer registration line and in the About-page details — no code change.
 
 ---
 
