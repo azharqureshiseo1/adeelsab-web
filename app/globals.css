@@ -165,27 +165,30 @@ p {
 }
 
 /* --- Scroll reveal --------------------------------------------------------
-   Driven by IntersectionObserver in components/blocks/Reveal.tsx. CSS only,
-   and fully disabled under prefers-reduced-motion.
+   Driven by IntersectionObserver in components/blocks/Reveal.tsx.
+
+   Content is visible by default and only `.reveal-hidden` — a class that only
+   script ever applies — takes it away. A failed or slow bundle therefore leaves
+   the page fully readable instead of blanking whole sections.
 --------------------------------------------------------------------------- */
 .reveal {
-  opacity: 0;
-  transform: translateY(16px);
   transition:
     opacity 0.5s ease-out,
     transform 0.5s ease-out;
 }
 
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(16px);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
+  /* Belt and braces: the component already skips hiding under reduced motion. */
+  .reveal,
+  .reveal-hidden {
     opacity: 1;
     transform: none;
     transition: none;
