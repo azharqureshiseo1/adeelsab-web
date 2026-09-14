@@ -26,8 +26,9 @@ export const config = {
   /** TODO: confirm target launch date - drives all "launching soon" copy. */
   launchWindow: t('Launching Q1 2027', 'لانچ — پہلی سہ ماہی 2027'),
 
-  /** TODO: confirm own-fleet cities at launch. */
-  ownFleetCities: ['Lahore', 'Karachi', 'Faisalabad'],
+  /** TODO: confirm. Own fleet runs in Lahore only at launch; everywhere else
+   *  is carried by the courier partners. */
+  ownFleetCities: ['Lahore'],
 
   /** TODO: confirm. Hand-updated - never a fake live counter. */
   foundingSeller: {
@@ -257,8 +258,8 @@ export const home = {
       'وہ ڈیلیوری جس پر آپ کے گاہک پہلے ہی اعتماد کرتے ہیں',
     ),
     sub: t(
-      'Our own riders inside our launch cities. TCS, Leopards, PostEx and M&P everywhere else in Pakistan.',
-      'ہمارے اپنے رائیڈرز لانچ شہروں میں۔ باقی پورے پاکستان میں TCS، Leopards، PostEx اور M&P۔',
+      `Our own riders in ${config.ownFleetCities.join(', ')}. TCS, Leopards, PostEx and M&P everywhere else in Pakistan.`,
+      `ہمارے اپنے رائیڈرز ${config.ownFleetCities.join('، ')} میں۔ باقی پورے پاکستان میں TCS، Leopards، PostEx اور M&P۔`,
     ),
     cta: t('See coverage, timelines and rates', 'کوریج، اوقات اور ریٹ دیکھیں'),
   },
@@ -380,12 +381,10 @@ export type Capability = {
 export const capabilities: Capability[] = [
   {
     icon: 'truck',
-    // TODO: confirm launch cities
-    value: t(`${config.ownFleetCities.length} cities`, `${config.ownFleetCities.length} شہر`),
-    label: t(
-      `AdeelSab Couriers in ${config.ownFleetCities.join(', ')}`,
-      `ایڈیل صاحب کورئیرز: ${config.ownFleetCities.join('، ')}`,
-    ),
+    // TODO: confirm launch cities. Named rather than counted — "1 city" reads
+    // as a limitation, "Lahore" reads as a fact the reader can act on.
+    value: t(config.ownFleetCities.join(' · '), config.ownFleetCities.join(' · ')),
+    label: t('AdeelSab Couriers, our own fleet', 'ایڈیل صاحب کورئیرز — ہماری اپنی فلیٹ'),
   },
   {
     icon: 'map',
@@ -1001,8 +1000,8 @@ export const delivery = {
     eyebrow: t('Delivery & coverage', 'ڈیلیوری اور کوریج'),
     title: t('Where we deliver, how fast, and what it costs', 'ہم کہاں، کتنی جلدی اور کتنے میں پہنچاتے ہیں'),
     sub: t(
-      'Our own riders inside our launch cities, and Pakistan-wide coverage through the couriers your customers already know.',
-      'لانچ شہروں میں ہمارے اپنے رائیڈرز، اور پورے پاکستان میں وہ کورئیر جنہیں آپ کے گاہک پہلے سے جانتے ہیں۔',
+      `Our own riders in ${config.ownFleetCities.join(', ')}, and Pakistan-wide coverage through the couriers your customers already know.`,
+      `${config.ownFleetCities.join('، ')} میں ہمارے اپنے رائیڈرز، اور پورے پاکستان میں وہ کورئیر جنہیں آپ کے گاہک پہلے سے جانتے ہیں۔`,
     ),
   },
   map: {
@@ -1010,8 +1009,8 @@ export const delivery = {
     ownFleet: t('Own fleet', 'اپنی فلیٹ'),
     partnerNetwork: t('Courier partner network', 'کورئیر پارٹنر نیٹ ورک'),
     note: t(
-      'Own-fleet cities get same-day and next-day delivery under our direct control. Everywhere else is served by our courier partners.',
-      'اپنی فلیٹ والے شہروں میں اسی دن یا اگلے دن ڈیلیوری ہماری براہِ راست نگرانی میں۔ باقی جگہ کورئیر پارٹنرز کے ذریعے۔',
+      `${config.ownFleetCities.join(', ')} gets same-day and next-day delivery under our direct control, carried by AdeelSab Couriers. Everywhere else in Pakistan is served by our courier partners.`,
+      `${config.ownFleetCities.join('، ')} میں اسی دن یا اگلے دن ڈیلیوری ہماری براہِ راست نگرانی میں، ایڈیل صاحب کورئیرز کے ذریعے۔ باقی پورے پاکستان میں کورئیر پارٹنرز۔`,
     ),
   },
   timelines: { title: t('Delivery timelines', 'ڈیلیوری کے اوقات') },
@@ -1054,24 +1053,39 @@ export const delivery = {
   returnPickup: { title: t('How a return comes back to you', 'واپسی آپ تک کیسے پہنچتی ہے') },
 };
 
-export type City = { name: string; province: string; ownFleet: boolean; x: number; y: number };
+export type City = {
+  name: string;
+  province: string;
+  /** True only where AdeelSab Couriers carries the parcel itself. */
+  ownFleet: boolean;
+  lat: number;
+  lon: number;
+};
 
-/** Approximate positions on the 0-100 viewBox grid used by CoverageMap. */
+/**
+ * Real coordinates. CoverageMap projects them with the same Mercator transform
+ * used to generate the outline, so a city can be added or promoted to own-fleet
+ * here without anyone touching the SVG.
+ */
 export const cities: City[] = [
-  { name: 'Lahore', province: 'Punjab', ownFleet: true, x: 62, y: 49 },
-  { name: 'Karachi', province: 'Sindh', ownFleet: true, x: 29, y: 88 },
-  { name: 'Faisalabad', province: 'Punjab', ownFleet: true, x: 55, y: 52 },
-  { name: 'Islamabad', province: 'Federal', ownFleet: false, x: 57, y: 32 },
-  { name: 'Rawalpindi', province: 'Punjab', ownFleet: false, x: 56, y: 34 },
-  { name: 'Multan', province: 'Punjab', ownFleet: false, x: 47, y: 62 },
-  { name: 'Peshawar', province: 'KP', ownFleet: false, x: 45, y: 28 },
-  { name: 'Quetta', province: 'Balochistan', ownFleet: false, x: 26, y: 58 },
-  { name: 'Hyderabad', province: 'Sindh', ownFleet: false, x: 34, y: 80 },
-  { name: 'Sialkot', province: 'Punjab', ownFleet: false, x: 65, y: 41 },
-  { name: 'Gujranwala', province: 'Punjab', ownFleet: false, x: 62, y: 43 },
-  { name: 'Sukkur', province: 'Sindh', ownFleet: false, x: 37, y: 70 },
-  { name: 'Gilgit', province: 'Gilgit-Baltistan', ownFleet: false, x: 63, y: 14 },
-  { name: 'Turbat', province: 'Balochistan', ownFleet: false, x: 12, y: 82 },
+  { name: 'Lahore', province: 'Punjab', ownFleet: true, lat: 31.5204, lon: 74.3587 },
+  { name: 'Karachi', province: 'Sindh', ownFleet: false, lat: 24.8607, lon: 67.0011 },
+  { name: 'Islamabad', province: 'Federal', ownFleet: false, lat: 33.6844, lon: 73.0479 },
+  { name: 'Rawalpindi', province: 'Punjab', ownFleet: false, lat: 33.5651, lon: 73.0169 },
+  { name: 'Faisalabad', province: 'Punjab', ownFleet: false, lat: 31.418, lon: 73.079 },
+  { name: 'Multan', province: 'Punjab', ownFleet: false, lat: 30.1575, lon: 71.5249 },
+  { name: 'Peshawar', province: 'KP', ownFleet: false, lat: 34.0151, lon: 71.5805 },
+  { name: 'Quetta', province: 'Balochistan', ownFleet: false, lat: 30.1798, lon: 66.975 },
+  { name: 'Hyderabad', province: 'Sindh', ownFleet: false, lat: 25.396, lon: 68.3578 },
+  { name: 'Sialkot', province: 'Punjab', ownFleet: false, lat: 32.4945, lon: 74.5229 },
+  { name: 'Gujranwala', province: 'Punjab', ownFleet: false, lat: 32.1877, lon: 74.1945 },
+  { name: 'Sargodha', province: 'Punjab', ownFleet: false, lat: 32.0836, lon: 72.6711 },
+  { name: 'Bahawalpur', province: 'Punjab', ownFleet: false, lat: 29.3956, lon: 71.6836 },
+  { name: 'Sukkur', province: 'Sindh', ownFleet: false, lat: 27.7052, lon: 68.8574 },
+  { name: 'Abbottabad', province: 'KP', ownFleet: false, lat: 34.1688, lon: 73.2215 },
+  { name: 'Gilgit', province: 'Gilgit-Baltistan', ownFleet: false, lat: 35.9208, lon: 74.3144 },
+  { name: 'Turbat', province: 'Balochistan', ownFleet: false, lat: 26.0031, lon: 63.045 },
+  { name: 'Gwadar', province: 'Balochistan', ownFleet: false, lat: 25.1264, lon: 62.3225 },
 ];
 
 export const deliveryTimelines: Array<{ zone: Copy; time: Copy; by: Copy }> = [

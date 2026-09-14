@@ -82,13 +82,15 @@ components/
 content/
   site.ts               ALL user-facing copy, EN + UR. Single source of truth.
   doc-meta.ts           Article metadata (kept apart so index pages stay light)
+  pakistan-outline.ts   GENERATED map outline — see scripts/
   docs.ts               MDX body registry
   seller-hub/*.mdx      Seven guides
   blog/*.mdx            Three posts
-lib/                    i18n, seo, analytics, utils
+lib/                    i18n, seo, analytics, geo (map projection), utils
 public/brand/           Supplied logo artwork; source for every icon
 public/api/submit.php   The waitlist endpoint
-scripts/                Brand asset generation (favicon, app icons, OG image)
+scripts/                Brand assets (favicon, icons, OG image, fleet lockup)
+                        and the coverage-map outline generator
 deploy/.htaccess        Uploaded to the server by hand, once
 ```
 

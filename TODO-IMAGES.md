@@ -85,6 +85,28 @@ Shown on `/delivery` (COD section) and `/payouts`.
 
 ---
 
+## 2b. Coverage map — ✅ real boundary data
+
+`content/pakistan-outline.ts` is **generated**, not hand-drawn. The outline comes
+from Natural Earth via world-atlas (public domain), projected to spherical
+Mercator by `scripts/generate-coverage-map.py`. City pins are projected from
+real latitude and longitude at render time, so adding a city or promoting one to
+own-fleet is a data edit in `content/site.ts` and never a change to the SVG.
+
+To regenerate:
+
+```bash
+curl -s -o countries-50m.json https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json
+python scripts/generate-coverage-map.py countries-50m.json
+```
+
+> ⚠️ **Have someone check the borders before launch.** The polygon includes
+> Gilgit-Baltistan and Azad Kashmir, which is the depiction a Pakistani company
+> would expect — but border rendering is sensitive here and is worth one pair of
+> human eyes on the live page.
+
+---
+
 ## 3. Photography
 
 ### Priority 1 — the hero

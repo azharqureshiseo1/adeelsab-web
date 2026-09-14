@@ -37,7 +37,7 @@ The official SECP and FBR emblems are both displayed. The SECP badge carries its
 | # | Item | Where | Currently |
 |---|---|---|---|
 | 12 | Target launch date | `config.launchWindow` | `Launching Q1 2027` |
-| 13 | Own-fleet cities at launch | `config.ownFleetCities` | Lahore, Karachi, Faisalabad |
+| 13 | Own-fleet cities at launch | `config.ownFleetCities` | **Lahore only.** Every other city is served by courier partners. Adding a city here updates the map pin, the capability band and every sentence that names the fleet |
 | 14 | Founding Seller cap | `config.foundingSeller.cap` | `500` |
 | 15 | Commission holiday length | `config.foundingSeller.commissionHolidayMonths` | `3` months |
 | 16 | Registered merchant count | `config.foundingSeller.registered` | `0` — **hand-updated, never a live counter** |

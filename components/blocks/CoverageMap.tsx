@@ -1,20 +1,20 @@
 'use client';
 
 import { useT } from '@/components/layout/LanguageProvider';
+import { MAP_VIEWBOX, PAKISTAN_OUTLINE } from '@/content/pakistan-outline';
 import { cities, delivery } from '@/content/site';
+import { projectToMap } from '@/lib/geo';
 import { cn } from '@/lib/utils';
 
 /**
- * Stylised map of Pakistan on a 0-100 grid.
+ * Map of Pakistan with delivery coverage.
  *
- * The city markers are driven by the `cities` array in content/site.ts, so a
- * launch city can be added or promoted to own-fleet without touching this SVG.
- * The outline is deliberately simplified - it is an orientation device, not a
- * cartographic claim, and no border here should be read as authoritative.
+ * The outline is real boundary data (Natural Earth, public domain), projected
+ * to spherical Mercator by scripts/generate-coverage-map.py. City pins are
+ * projected at render time from their actual latitude and longitude, so adding
+ * a city — or promoting one to own-fleet — is a data edit in content/site.ts
+ * and never a change to this file.
  */
-const OUTLINE =
-  'M58 6 L66 11 L69 18 L64 23 L67 29 L62 33 L58 30 L52 33 L48 30 L44 33 L41 31 L38 36 L33 38 L30 44 L24 47 L20 54 L23 60 L21 66 L26 70 L31 72 L33 78 L29 84 L25 92 L33 93 L38 88 L44 84 L47 76 L52 70 L57 64 L62 58 L66 52 L70 47 L74 43 L72 37 L75 31 L72 25 L68 20 L64 12 Z';
-
 export function CoverageMap({ className }: { className?: string }) {
   const t = useT();
 
@@ -22,42 +22,58 @@ export function CoverageMap({ className }: { className?: string }) {
   const partnerCities = cities.filter((city) => !city.ownFleet);
 
   return (
-    <div className={cn('grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-center', className)}>
+    <div className={cn('grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-12', className)}>
       <div className="rounded-2xl border border-ink-200 bg-white p-4 md:p-6">
         <svg
-          viewBox="0 0 100 100"
+          viewBox={`-4 -4 ${MAP_VIEWBOX.width + 8} ${MAP_VIEWBOX.height + 8}`}
           role="img"
-          aria-label="Map of Pakistan showing AdeelSab own-fleet cities and nationwide courier coverage"
+          aria-labelledby="coverage-map-title coverage-map-desc"
           className="h-auto w-full"
         >
-          <title>AdeelSab delivery coverage across Pakistan</title>
+          <title id="coverage-map-title">AdeelSab delivery coverage across Pakistan</title>
+          <desc id="coverage-map-desc">
+            {`AdeelSab Couriers operates its own fleet in ${ownFleet
+              .map((c) => c.name)
+              .join(', ')}. Every other city shown, and the rest of Pakistan, is served by our courier partners.`}
+          </desc>
 
-          <path d={OUTLINE} fill="#F1F4F7" stroke="#E2E6EB" strokeWidth="0.6" strokeLinejoin="round" />
+          <path
+            d={PAKISTAN_OUTLINE}
+            fill="#F1F4F7"
+            stroke="#D7DDE4"
+            strokeWidth="0.5"
+            strokeLinejoin="round"
+          />
 
-          {partnerCities.map((city) => (
-            <g key={city.name}>
-              <circle cx={city.x} cy={city.y} r="1.1" fill="#7C8797" />
-              <title>{`${city.name} - courier partner network`}</title>
-            </g>
-          ))}
+          {partnerCities.map((city) => {
+            const { x, y } = projectToMap(city.lat, city.lon);
+            return (
+              <circle key={city.name} cx={x} cy={y} r="1.1" fill="#7C8797">
+                <title>{`${city.name} — courier partner network`}</title>
+              </circle>
+            );
+          })}
 
-          {ownFleet.map((city) => (
-            <g key={city.name}>
-              {/* Halo reads as service radius, not a data claim. */}
-              <circle cx={city.x} cy={city.y} r="4" fill="#FB5301" opacity="0.14" />
-              <circle cx={city.x} cy={city.y} r="1.9" fill="#FB5301" />
-              <title>{`${city.name} - AdeelSab own fleet`}</title>
-            </g>
-          ))}
+          {ownFleet.map((city) => {
+            const { x, y } = projectToMap(city.lat, city.lon);
+            return (
+              <g key={city.name}>
+                {/* The halo reads as a service area, not a precise radius. */}
+                <circle cx={x} cy={y} r="4.5" fill="#FB5301" opacity="0.15" />
+                <circle cx={x} cy={y} r="2.2" fill="#FB5301" stroke="#FFFFFF" strokeWidth="0.6" />
+                <title>{`${city.name} — AdeelSab Couriers own fleet`}</title>
+              </g>
+            );
+          })}
         </svg>
 
-        <ul className="mt-4 flex flex-wrap justify-center gap-5 text-sm">
+        <ul className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
           <li className="flex items-center gap-2">
             <span aria-hidden className="h-3 w-3 rounded-full bg-brand-500" />
             {t(delivery.map.ownFleet)}
           </li>
           <li className="flex items-center gap-2">
-            <span aria-hidden className="h-3 w-3 rounded-full bg-ink-400" />
+            <span aria-hidden className="h-2.5 w-2.5 rounded-full bg-ink-400" />
             {t(delivery.map.partnerNetwork)}
           </li>
         </ul>
