@@ -21,7 +21,7 @@ These are the figures Pakistani merchants judge a platform on. A vague answer to
 | 7 | ~~SECP registration number~~ | `content/site.ts` → `config.legal.secp` | ✅ **0353167** |
 | 8 | **NTN** | `content/site.ts` → `config.legal.ntn` | Empty. **The FBR mark and the NTN line stay hidden until this is filled in** — see below |
 | 9 | ~~Registered legal entity name~~ | `content/site.ts` → `config.legal.entity` | ✅ **AdeelSab (Private) Limited** |
-| 10 | **Physical office address** | `content/site.ts` → `config.contact.addressLines` | Three `TODO:` lines |
+| 10 | ~~Physical office address~~ | `content/site.ts` → `config.contact.addressLines` | ✅ **Office No. 20, First Floor, Takbeer Plaza, Al Faisal Town, Lahore** |
 | 11 | **WhatsApp support number** | `content/site.ts` → `config.contact.whatsapp` | `923001234567` — **demo number, not ours** |
 
 > ⚠️ Item 11 appears on **every page** via the floating WhatsApp button. Until it is real, that button opens a chat with a non-existent number. It is now the only contact number on the site — the placeholder landline was removed.

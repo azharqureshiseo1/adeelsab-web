@@ -56,8 +56,8 @@ export const config = {
     supportEmail: 'support@adeelsab.com', // TODO: confirm
     businessEmail: 'business@adeelsab.com', // TODO: confirm
     addressLines: [
-      'TODO: office address line 1',
-      'TODO: office address line 2',
+      'Office No. 20, First Floor',
+      'Takbeer Plaza, Al Faisal Town',
       'Lahore, Punjab, Pakistan',
     ],
     hours: t('Monday to Saturday, 10:00 - 19:00 PKT', 'پیر تا ہفتہ، صبح 10 تا شام 7 بجے'),
